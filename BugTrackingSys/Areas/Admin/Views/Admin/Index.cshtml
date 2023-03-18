@@ -1,0 +1,136 @@
+﻿@model BugTrackingSys.Areas.Admin.Models.UsersRolesViewModel;
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Dashboard Page";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+<style>
+
+
+
+    .square-box {
+        border-radius: 25px;
+        padding: 20px;
+        height: 150px;
+        position: relative;
+        width: 250px;
+        overflow: hidden;
+        background-color: green;
+    }
+
+        .square-box:hover {
+            background: #3d3d79 !important;
+            color: #fff;
+            text-decoration: none !important;
+        }
+
+        .square-box:before {
+            content: "";
+            display: block;
+            padding: 100px 80px;
+        }
+
+    .square-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        color: white;
+    }
+
+        .square-content div {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+
+        .square-content span {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            color: white
+        }
+
+    .green {
+        background-color: blue !important;
+    }
+
+     .pink {
+        background-color: pink !important;
+    }
+
+    .orange {
+        background-color: orange !important;
+    }
+
+    .sq1 {
+       
+        display: inline-flex;
+    }
+
+    .sq2 {
+        display: inline-block;
+        padding-left: 0px;
+        margin-top: 30px;
+      
+    }
+
+    .sq3 {
+        display: inline-block;
+        padding-left: 0px;
+        margin-top: 30px;
+        
+    }
+    .PageCLS {
+        padding: 80px 80px !important;
+    }
+
+    .PageCLSII {
+        padding: 1px 80px !important;
+    }
+
+     .PageCLSIII {
+        padding: 80px 80px !important;
+    }
+
+    .PageCLSIIII {
+        padding: 1px 80px !important;
+    }
+
+</style>
+<div class="PageCLS">
+    <div class='sq1'>
+        <div class='square-box pink'>
+            <div class='square-content logout_btn'><div><span> <a asp-area="Admin" asp-controller="Admin" asp-action="AddRole" style=" color: white;">Add Role</a></span></div></div>
+        </div>
+    </div>
+    <div class='sq2'>
+        <div class='square-box green'>
+            <div class='square-content logout_btn'><div><span> <a asp-area="Admin" asp-controller="Admin" asp-action="AddUser" style=" color: white;">Add User</a></span></div></div>
+        </div>
+    </div>
+    <div class='sq3'>
+        <div class='square-box orange'>
+            <div class='square-content logout_btn'><div><span> <a asp-area="Admin" asp-controller="CommonFun" asp-action="AddProject" style=" color: white;">Add Project</a></span></div></div>
+        </div>
+    </div>
+</div>
+<div class="PageCLSII">
+    <div class='sq1'>
+        <div class='square-box orange'>
+            <div class='square-content logout_btn'><div><span><a asp-area="Admin" asp-controller="Admin" asp-action="GetUserlst" style=" color: white;">User List</a></span></div></div>
+        </div>
+    </div>
+    <div class='sq2'>
+        <div class='square-box pink'>
+            <div class='square-content logout_btn'><div><span> <a asp-area="Admin" asp-controller="Admin" asp-action="GetRolelst" style=" color: white;">Role List</a></span></div></div>
+        </div>
+    </div>
+    <div class='sq3'>
+        <div class='square-box green'>
+            <div class='square-content logout_btn'><div><span>  <a asp-area="Admin" asp-controller="CommonFun" asp-action="GetProjectlst" style=" color: white;">Project List</a></span></div></div>
+        </div>
+    </div>
+</div>

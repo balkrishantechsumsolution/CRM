@@ -1,0 +1,100 @@
+﻿@model BugTrackingSys.Areas.Admin.Models.UsersRolesViewModel;
+
+<script>
+    $(document).ready(function () {
+        $(".siderbar_menu li").click(function () {
+            $(".siderbar_menu li").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $(".hamburger").click(function () {
+            $(".wrapper").addClass("active");
+        });
+
+        $(".close, .bg_shadow").click(function () {
+            $(".wrapper").removeClass("active");
+        });
+    });
+</script>
+<style>
+    .wordWrap {
+       /* width: 150px !important;*/
+        max-width: 200px !important;
+        word-wrap: break-word !important;
+    }
+</style>
+<div class="wrapper">
+    <div class="sidebar">
+        <div class="bg_shadow"></div>
+        <div class="sidebar_inner">
+            <div class="close">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="profile_info">
+                <div class="profile_img">
+                    <img src="~/images/TechSum.jpg"  alt="profile_img">
+                </div>
+               @* <div class="profile_data">
+                    <p class="name">Admin Module</p>
+                    <span><i class="fas fa-map-marker-alt"></i>Bhopal, India</span>
+                </div>*@
+                <div class="profile_data wordWrap">
+                    <p class="name">@Model.user.Name</p>
+                    <p class="name">@Model.role.name</p>
+                </div>
+            </div>
+            <ul class="siderbar_menu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Admin" asp-action="Index">
+                        <div class="icon"><i class="fas fa-home"></i></div>
+                        <div class="title">Home</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="icon"><i class="fas fa-hotel"></i></div>
+                        <div class="title">User</div>
+                        <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                    </a>
+                    <ul class="accordion">
+                        <li><a asp-area="Admin" asp-controller="Admin" asp-action="AddUser">Add User</a></li>
+                        <li><a asp-area="Admin" asp-controller="Admin" asp-action="GetUserlst">User List</a></li>
+                       
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <div class="icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="title">Role</div>
+                        <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                    </a>
+                    <ul class="accordion">
+                        <li><a asp-area="Admin" asp-controller="Admin" asp-action="AddRole">Add Roll</a></li>                       
+                        <li><a asp-area="Admin" asp-controller="Admin" asp-action="GetRolelst">Roll List</a></li>
+
+                    </ul>
+                </li>
+
+                             
+
+                <li>
+                    <a href="#">
+                        <div class="icon"><i class="fas fa-hotel"></i></div>
+                        <div class="title">Project</div>
+                        <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                    </a>
+                    <ul class="accordion">
+                        <li><a asp-area="Admin" asp-controller="CommonFun" asp-action="AddProject">Add Project</a></li>
+                        <li><a asp-area="Admin" asp-controller="CommonFun" asp-action="GetProjectlst">Project List</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <div class="logout_btn">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Logout</a>
+            </div>
+
+        </div>
+    </div>
+</div>

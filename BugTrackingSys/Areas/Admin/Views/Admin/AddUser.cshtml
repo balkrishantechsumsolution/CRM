@@ -1,0 +1,90 @@
+﻿@model BugTrackingSys.Areas.Admin.Models.UsersRolesViewModel;
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Add User Page";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<style>
+    .sFont {
+        color: goldenrod;
+        font-weight: bold;
+    }
+</style>
+<link href="https://unpkg.com/tailwindcss@1.0/dist/tailwind.min.css" rel="stylesheet" />
+<div class="PageCLSFRM logo">
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg">
+        <h1 class="display-4  sFont text-center">Add User</h1>       
+    </div>
+    <br />
+    <br />
+
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg">
+        <form class="form-horizontal" asp-action="AddUser">
+            <section class="main-content">
+                <div class="rows" style="min-height: 300px; margin: 0 auto; width: 50%">
+                    <div class="col-lg-12">
+
+                        <div class="">
+                            <div class="resp-tabs-container ver_1">
+                                <div style="margin-top: 10px;">
+                                    <div>
+                                        <div class="rows">
+                                            <div id="divElement">
+                                                <div class="box-body box-body-open">
+                                                    <br><br>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Username
+                                                        </label>
+                                                        <input type="text" asp-for="@Model.user.Id" class="form-control">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Password
+                                                        </label>
+                                                        <input type="password" asp-for="@Model.user.Password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Confirm Password
+                                                        </label>
+                                                        <input type="password" asp-for="@Model.user.Password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Select Role Type
+                                                         </label>
+                                                        <select name="role.Id" class="form-control" asp-items="@Model.RoleMainList"></select>
+                                                        </div>
+                                                    <br />
+                                                    <input type="submit" class="btn btn-primary" value="Login">
+                                                    <br />
+                                                    <br />
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label sFont text-center">
+                                                                @Html.Raw(ViewBag.Message)
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>

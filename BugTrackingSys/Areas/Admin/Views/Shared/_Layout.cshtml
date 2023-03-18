@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<style>
+    body {
+        font-family: Arial;
+        color: white;
+    }
+
+    .split {
+        height: 100%;
+        width: 80%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .left .nav-item .ullist {
+        left: 0;
+        max-width: 200px !important;
+    }
+
+    .anc {
+        max-width: 200px !important;
+    }
+
+   /* .right {
+        left: 230px;
+    }*/
+
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+        .centered img {
+            width: 150px;
+            border-radius: 50%;
+        }
+</style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+    <script src="~/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <link href="~/css/Styles.css" rel="stylesheet" />
+    
+
+</head>
+<body>
+    <div class="wrapper">
+        @await Html.PartialAsync("_LeftMenu.cshtml")
+        <div class="main-nav container col-md-10">
+            @await Html.PartialAsync("_HeadMenu.cshtml")
+            <main role="main">
+                <div class="split right">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>
