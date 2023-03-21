@@ -1,0 +1,175 @@
+﻿
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Add User Page";
+    Layout = "~/Areas/Developer/Views/Shared/_Layout.cshtml";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<style>
+    .sFont {
+        color: goldenrod;
+        font-weight: bold;
+    }
+
+    .split {
+        height: 100% !important;
+        overflow: unset !important;
+    }
+</style>
+
+<link href="https://unpkg.com/tailwindcss@1.0/dist/tailwind.min.css" rel="stylesheet" />
+<div class="PageCLSFRM logo">
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg">
+        <h1 class="display-4  sFont text-center">Add Task</h1>
+    </div>
+    <br />
+    <br />
+
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg" style="width: 100%;  height: 420px;  overflow: scroll;">
+        <form class="form-horizontal">
+            <section class="main-content">
+                <div class="rows" style="min-height: 300px; margin: 0 auto; width: 50%">
+                    <div class="col-lg-12">
+
+                        <div class="">
+                            <div class="resp-tabs-container ver_1">
+                                <div style="margin-top: 10px;">
+                                    <div>
+                                        <div class="rows">
+                                            <div id="divElement">
+                                                <div class="box-body box-body-open">
+                                                    <br><br>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Name
+                                                        </label>
+                                                        <input type="text"  class="form-control">
+                                                    </div>
+                                                      <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Start Date
+                                                        </label>
+                                                        <input type="text" id="txtStartDate" class="form-control">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task End Date
+                                                        </label>
+                                                        <input type="text" id="txtEndDate" class="form-control">
+                                                    </div>
+
+                                                    @* <div class="form-group">
+                                                    <label class="display-7  sFont text-center control-label">
+                                                    Project Description
+                                                    </label>
+                                                    <input type="text" asp-for="Description" class="form-control">
+                                                    </div>      *@
+                                                    <div class="form-outline" style="margin:0;width: 700px;">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Description
+                                                        </label>
+                                                        <div>
+                                                            <textarea class="form-control" id="project_Description"></textarea>
+                                                            <span  class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task assignment Name
+                                                        </label>
+                                                        <select name="CreatedBy" class="form-control"></select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Priority
+                                                        </label>
+                                                        <select name="CreatedBy" class="form-control" ></select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Status
+                                                        </label>
+                                                        <select name="CreatedBy" class="form-control" ></select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Select Attachment:
+                                                        </label>
+                                                        <input id="upload"  class="btn btn-primary" type="file" multiple>
+                                                    </div>
+                                                    
+                                                    <br />
+                                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                                    <br />
+                                                    <br />
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label sFont text-center">
+                                                                @Html.Raw(ViewBag.Message)
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        tinymce.init({ selector: "#project_Description" });
+    </script>
+    <script src="~/jquery-ui-1.13.2/jquery-ui.js"></script>
+    <link href="~/jquery-ui-1.13.2/jquery-ui.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.theme.min.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $('#txtStartDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                yearRange: '2010:2019',
+                changeMonth: true,
+                changeYear: true,
+                maxDate: '0',
+                yearRange: "-150:+0",
+                onSelect: function (date) {
+
+                    //GetValidateImmunizationDate();
+                }
+            });
+
+            $('#txtEndDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                yearRange: '2010:2019',
+                changeMonth: true,
+                changeYear: true,
+                maxDate: '0',
+                yearRange: "-150:+0",
+                onSelect: function (date) {
+
+                    //GetValidateImmunizationDate();
+                }
+            });
+        });
+    </script>
+}
+
+
+   

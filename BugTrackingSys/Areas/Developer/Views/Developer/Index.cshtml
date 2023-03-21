@@ -7,6 +7,7 @@
     var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
 }
 
+
 <script src="~/lib/daypilot/daypilot-all.min.js" asp-append-version="true"></script>
 
 <!-- BS JavaScript -->
@@ -34,45 +35,22 @@
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Insert</button>
- <form  class="form-horizontal" asp-action="Index">
-<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Customer Details Form</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text"  class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Country:</label>
-                    <select  class="form-control">
-                        <option value="">Please select</option>
-                        <option value="India">India</option>
-                        <option value="China">China</option>
-                        <option value="Australia">Australia</option>
-                        <option value="France">France</option>
-                        <option value="Unites States">Unites States</option>
-                        <option value="Russia">Russia</option>
-                        <option value="Canada">Canada</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
+<input type="hidden" id="hfCreatedOn" name="CreatedOn" />
+
+<script id="gridScpt" type="text/html">
+
+    
+    
+   
+
+     
+</script>
+
 <script>
+
+    var CreatedOn = "";
+
+
 
     const datePicker = new DayPilot.Navigator("nav", {
         showMonths: 3,
@@ -81,15 +59,109 @@
         onTimeRangeSelected: args => {
             calendar.startDate = args.day;
             calendar.update();
-            //calendar.events.load("/api/events");
+
         }
     });
     datePicker.init();
 
+    function flatten(resources, result) {
+        result = result || [];
+
+        resources && resources.forEach(function (r) {
+            result.push(r);
+            flatten(r.children, result);
+        })
+
+        return result;
+    }
+    function validateTextRequired(args) {
+        var value = args.value || "";
+        if (value.trim().length === 0) {
+            args.valid = false;
+            args.message = "Text required";
+        }
+        else if (value.toLowerCase().includes("a")) {
+            args.valid = false;
+            args.message = "Text must not contain 'a'.";
+        }
+        else if (value.includes("2020")) {
+            args.valid = false;
+            args.message = "2020 not allowed.";
+        }
+    }
+
+    var resources = [
+        { name: "Resource A", id: "A" },
+        { name: "Resource B", id: "B" },
+        { name: "Resource C", id: "C" },
+    ];
+    var priorities = [
+        { name: "Priority 1", id: 1 },
+        { name: "Priority 2", id: 2 },
+        { name: "Priority 3", id: 3 },
+    ];
+
+    
+
     const calendar = new DayPilot.Month("dp", {
+
+        //var today = DayPilot.Date.today();
+
+        //DayPilot.Modal.showHtml(html);
+
         eventHeight: 30,
         onTimeRangeSelected: async args => {
-            //const modal = await DayPilot.Modal.prompt("Create a new event:", "Event");
+
+            //var staff = [{ "id": "group_1", "name": "Resource 1", "expanded": true, "children": [{ "id": "1", "name": "Adam Emerson" }, { "id": "2", "name": "Cheryl Irwin" }] }, { "id": "group_2", "name": "Resource 2", "expanded": true, "children": [{ "id": "3", "name": "Emily Jameson" }, { "id": "4", "name": "Eva Rodriguez" }] }, { "id": "group_3", "name": "Resource 3", "expanded": true, "children": [{ "id": "5", "name": "Eliah Kingston" }] }, { "id": "group_4", "name": "Resource 4", "expanded": true, "children": [{ "id": "6", "name": "Taylor Niles" }] }, { "id": "group_5", "name": "Resource 5", "expanded": true, "children": [{ "id": "7", "name": "Jo Thomas" }] }];
+            ////dp.resources.forEach(function (value) { staff.push(value['children']) })
+
+            //const form = [
+            //    { name: "Start Date", id: "start", type: 'date', dateFormat: 'd/M/yyyy' },
+            //    { name: "End Date", id: "end", type: 'date', dateFormat: 'd/M/yyyy' },
+            //    { name: 'Description', id: 'description', type: 'textarea', onValidate: validateTextRequired },
+            //    { name: "Employee", id: "resource", options: flatten(staff) },
+            //    { name: "Resource", id: "resource", options: resources, onValidate: validateTextRequired },
+            //    {
+            //        name: "Display as", id: "displayAs", type: "radio", options: [
+            //            {
+            //                name: "Event", id: "event", children: [
+            //                    { name: "Start", id: "start", type: "date" },
+            //                    { name: "End", id: "end", type: "date" },
+            //                    { name: "Resource", id: "resource", options: resources },
+            //                ]
+            //            },
+            //            {
+            //                name: "Task", id: "task", children: [
+            //                    { name: "Priority", id: "priority", options: priorities },
+            //                ]
+            //            }
+            //        ]
+            //    }
+            //];
+            ////const modal = await DayPilot.Modal.prompt("Create a new event:", "Event");
+            //const data = {
+            //    start: args.start,
+            //    end: args.start,
+            //};
+
+            //const modal = await DayPilot.Modal.form(form, data);
+
+
+
+            
+
+            //var html = document.getElementById("gridScpt").innerHTML;
+           
+
+
+             var url = args.start;
+            var urlPath = 'https://localhost:7022/Developer/MainHTML?CreatedOn=' + url;
+            var html = '<iframe id="showskill" style="width: 715px; height: 600px; border: 0" scrolling="no" src="' + urlPath + '"><\/iframe>'
+            var modal = new DayPilot.Modal();
+
+            modal.showHtml(html);
+
+            //tinymce.init({ selector: "#project_Description" });
 
             //calendar.clearSelection();
             //if (modal.canceled) {
@@ -101,10 +173,11 @@
             //    text: modal.result,
             //    resource: args.resource
             //};
-            //const { data: result } = await DayPilot.Http.post("/api/events", params);
+            //const { data: result } = await DayPilot.Http.post("/Support/events", params);
             //calendar.events.add(result);
 
-            $("#exampleModal").modal("show");
+            //window.$("#exampleModal").modal("show");
+            //alert(1);
         },
         onEventMove: async args => {
             const params = {
@@ -194,8 +267,59 @@
             ]
         })
     });
-    calendar.init();
+    //calendar.init();
 
+   
+    $(document).ready(function () {
+        var url = '@Url.Action("events", "Developer")'
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: '',
+            success: function (response) {
+                calendar.init();
+             
+                const events = response
+                calendar.update({
+                    events
+                });
+
+            },
+            error: errorCallback
+        });
+    });
+
+
+
+
+    function errorCallback() {
+        alert("Something went wrong please contact admin.");
+    }
+
+
+    //const events = [
+    //    {
+    //        start: "2023-03-25T00:00:00",
+    //        end: "2023-03-27T00:00:00",
+    //        id: "1",
+    //        text: "CSVTU Task 1",
+    //         color:"bule"
+    //    },
+    //    {
+    //        start: "2023-03-26T12:00:00",
+    //        end: "2023-03-27T00:00:00",
+    //        id: "2",
+    //        text: "CSVTU Task 2",
+    //        color:"red"
+    //    }
+    //];
+    //calendar.update({
+    //    events
+    //});
 
 
     const app = {
@@ -290,3 +414,4 @@
     }
 
 </style>
+
