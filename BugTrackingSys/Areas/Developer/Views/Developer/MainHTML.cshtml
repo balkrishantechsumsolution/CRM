@@ -66,6 +66,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>TaskId</th>
+                                                                    <th>View</th>
                                                                     <th>TaskName</th>
                                                                     <th>ProjectID</th>
                                                                     <th>TaskDescrpition</th>
@@ -82,7 +83,7 @@
                                                                     <th>Stage</th>
                                                                     <th>TaskAssigneeType</th>
                                                                     <th>OwnerType</th>
-                                                                    <th>View</th>
+                                                                    
                                                                 </tr>
                                                             </thead>
                                                         </table>
@@ -142,14 +143,16 @@
             },
             "columnDefs": [{
                 "targets": [0],
-                "visible": true,
+                "visible": false,
                 "searchable": false
             }],
-            "columns": [
+            "columns":            
+            [
+                { "data": "taskId", "name": "TaskId", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" target="_blank"  href="/Developer/TaskIndex">View</a>'; }
                 },
-                { "data": "taskId", "name": "TaskId", "autoWidth": true },
+                
                 { "data": "taskName", "name": "TaskName", "autoWidth": true },
                 { "data": "projectID", "name": "ProjectID", "autoWidth": true },
                 { "data": "taskDescrpition", "name": "TaskDescrpition", "autoWidth": true },

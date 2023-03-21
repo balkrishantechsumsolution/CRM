@@ -161,10 +161,10 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     t.id =dtAll.Rows[i]["TaskId"].ToString();
                     t.start = dtAll.Rows[i]["Startdate"].ToString();
                     t.end = dtAll.Rows[i]["Startdate"].ToString();
-                    t.text = dtAll.Rows.Count.ToString()+" Tasks";
-                    t.color= "#cc4125";
+                    t.text = dtAll.Rows[i]["Cnt"].ToString();
+                    t.color= dtAll.Rows[i]["color"].ToString();
                     lstTask.Add(t);
-                    break;
+              
                 }
             }
 
@@ -281,6 +281,121 @@ namespace BugTrackingSys.Areas.Developer.Controllers
         {
             UsersRolesViewModel ur = new UsersRolesViewModel();
             ur = GetSessionUser();
+
+            var selectList = new List<SelectListItem>();
+
+            selectList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+            DataTable dtAll = sqlhelper.ExecuteDataTable("usp_Taskstatus");
+
+            if (dtAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtAll.Rows.Count; i++)
+                {
+                    selectList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtAll.Rows[i]["Name"].ToString(),
+                        Text = dtAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            ur.TaskList = selectList;
+
+            var selectOwnerList = new List<SelectListItem>();
+
+            selectOwnerList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+            DataTable dtUserAll = sqlhelper.ExecuteDataTable("SP_GetUserlst");
+
+            if (dtUserAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtUserAll.Rows.Count; i++)
+                {
+                    selectOwnerList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtUserAll.Rows[i]["Id"].ToString(),
+                        Text = dtUserAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            ur.OwnerMainList = selectOwnerList;
+
+            var selectAssigneeList = new List<SelectListItem>();
+
+            selectAssigneeList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtAssigneeAll = sqlhelper.ExecuteDataTable("SP_GetUserlst");
+
+            if (dtAssigneeAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtAssigneeAll.Rows.Count; i++)
+                {
+                    selectAssigneeList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtAssigneeAll.Rows[i]["Id"].ToString(),
+                        Text = dtAssigneeAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            ur.AssigneeMainList = selectAssigneeList;
+
+            var selectPriorityList = new List<SelectListItem>();
+
+            selectPriorityList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtPriorityAll = sqlhelper.ExecuteDataTable("usp_TaskPriority");
+
+            if (dtPriorityAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtPriorityAll.Rows.Count; i++)
+                {
+                    selectPriorityList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtPriorityAll.Rows[i]["Id"].ToString(),
+                        Text = dtPriorityAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            ur.PriorityList = selectPriorityList;
+
             return View(ur);
         }
 

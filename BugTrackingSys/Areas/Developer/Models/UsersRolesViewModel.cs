@@ -26,8 +26,7 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         public CalendarEvent cal { get; set; }
 
-        public List<Tasks> TaskList { get; set; }
-
+       
 
         public List<Tasks> CalendarEventList { get; set; }
 
@@ -37,6 +36,17 @@ namespace BugTrackingSys.Areas.Developer.Models
         [NotMapped]
         public IList<SelectListItem> UserMainList { get; set; }
 
+        [NotMapped]
+        public IList<SelectListItem> OwnerMainList { get; set; }
+
+        [NotMapped]
+        public IList<SelectListItem> AssigneeMainList { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> TaskList { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> PriorityList { get; set; }
 
 
         public UsersRolesViewModel()
