@@ -1,3 +1,5 @@
+using System.Globalization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -36,6 +38,12 @@ app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+var cultureInfo = new CultureInfo("en-GB");
+cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 app.UseRouting();
 

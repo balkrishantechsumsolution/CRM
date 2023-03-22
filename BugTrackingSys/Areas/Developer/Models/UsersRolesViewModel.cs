@@ -18,14 +18,17 @@ namespace BugTrackingSys.Areas.Developer.Models
         public ProjectViewModel project { get; set; }
         public RoleModel role { get; set; }
         public UsersModel user { get; set; }
-
-
-
+        public Tasks tasks { get; set; }
         public List<User_RolesModel> User_RolesModelList { get; set; }
         public List<UsersModel> UsersList { get; set; }
         public List<RoleModel> RoleList { get; set; }
         public List<ProjectViewModel> ProjectList { get; set; }
 
+        public CalendarEvent cal { get; set; }
+
+       
+
+        public List<Tasks> CalendarEventList { get; set; }
 
         [NotMapped]
         public IList<SelectListItem> RoleMainList { get; set; }
@@ -33,6 +36,17 @@ namespace BugTrackingSys.Areas.Developer.Models
         [NotMapped]
         public IList<SelectListItem> UserMainList { get; set; }
 
+        [NotMapped]
+        public IList<SelectListItem> OwnerMainList { get; set; }
+
+        [NotMapped]
+        public IList<SelectListItem> AssigneeMainList { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> TaskList { get; set; }
+
+        [NotMapped]
+        public List<SelectListItem> PriorityList { get; set; }
 
 
         public UsersRolesViewModel()
@@ -55,6 +69,15 @@ namespace BugTrackingSys.Areas.Developer.Models
 
 
         public string Isactive { get; set; }
+    }
+
+    public class CalendarEvent
+    {
+        public string id { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string text { get; set; }
+        public string? color { get; set; }
     }
 
 }
