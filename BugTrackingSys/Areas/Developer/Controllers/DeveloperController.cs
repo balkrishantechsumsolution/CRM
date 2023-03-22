@@ -398,6 +398,69 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             return View(ur);
         }
+        [HttpPost]
+        [Route("Developer/TaskIndex")]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult TaskIndex(UsersRolesViewModel loginModel)
+        {
+            UsersRolesViewModel ur = new UsersRolesViewModel();
+            try
+            {
+                
+                long size = ur.FormFile.Sum(f => f.Length);
+
+                var filePaths = new List<string>();
+                foreach (var formFile in ur.FormFile)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        // full path to file in temp location
+                        var filePath = Path.GetTempFileName(); //we are using Temp file name just for the example. Add your own file path.
+                        filePaths.Add(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            formFile.CopyToAsync(stream);
+                        }
+                    }
+                }
+
+                SqlParameter[] parameter = {
+                          new SqlParameter("@Name", loginModel.project.Name),
+                          new SqlParameter("@Description", loginModel.project.Description),
+                          new SqlParameter("@CreatedBy", loginModel.project.CreatedBy)
+                };
+
+                DataTable dtAll = sqlhelper.ExecuteDataTable("insert_ProjectSP", parameter);
+
+                if (dtAll.Rows.Count > 0)
+                {
+
+                    ViewBag.Message = "Project account Created.";
+
+                }
+                else
+                {
+                    ViewBag.Message = "Unable to created Project account.";
+                }
+
+
+
+                ur = GetSessionUser();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                ViewBag.Message = "Error while creating Project";
+
+            }
+
+            return View("TaskIndex", ur);
+
+        }
+
 
 
     }

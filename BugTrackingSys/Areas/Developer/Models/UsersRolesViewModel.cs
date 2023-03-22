@@ -1,6 +1,8 @@
 ﻿using BugTrackingSys.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
 
 namespace BugTrackingSys.Areas.Developer.Models
 {
@@ -26,7 +28,11 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         public CalendarEvent cal { get; set; }
 
-       
+        [Required]
+        [Display(Name = "File")]
+        public List<IFormFile> FormFile { get; set; }
+
+
 
         public List<Tasks> CalendarEventList { get; set; }
 
@@ -47,6 +53,8 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         [NotMapped]
         public List<SelectListItem> PriorityList { get; set; }
+
+        
 
 
         public UsersRolesViewModel()
