@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTrackingSys.Models
@@ -13,7 +14,7 @@ namespace BugTrackingSys.Models
         public string user_id { get; set; }
         public RoleModel role { get; set; }
         public UsersModel user { get; set; }
-
+        
         [NotMapped]
         public IList<SelectListItem> RoleList { get; set; }
     }
