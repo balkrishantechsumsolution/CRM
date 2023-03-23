@@ -39,5 +39,19 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         [NotMapped]
         public IList<SelectListItem> OwnerMainList { get; set; }
+
+       
+    }
+    public interface IFormFile
+    {
+        string ContentType { get; }
+        string ContentDisposition { get; }
+        IHeaderDictionary Headers { get; }
+        long Length { get; }
+        string Name { get; }
+        string FileName { get; }
+        Stream OpenReadStream();
+        void CopyTo(Stream target);
+        public Task CopyToAsync(Stream target);
     }
 }

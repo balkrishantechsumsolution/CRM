@@ -30,31 +30,37 @@ namespace BugTrackingSys.Areas.Support.Controllers
 
         [HttpGet]
         [Route("Support/events")]
-        public  JsonResult GetEvents()
+        public JsonResult events()
         {
-            List<CalendarEvent> lst= new List<CalendarEvent>();
-            CalendarEvent cls= new CalendarEvent();
+            UsersRolesViewModel urVM = new UsersRolesViewModel();
+            var userId = HttpContext.Session.GetString("LoginID");
 
-            cls.start ="2023-03-26T12:00:00";
-            cls.end = "2023-03-28T12:00:00";
-            cls.id = "1";
-            cls.text = "Bala Event 1";
-          
-            cls.color = "#cc4125";
-            lst.Add(cls);
+            SqlParameter[] parameter = {
+                          new SqlParameter("@TaskAssignee", userId)
+                };
 
-            cls = new CalendarEvent();
+            DataTable dtAll = sqlhelper.ExecuteDataTable("usp_GetAllTaskMasterSP", parameter);
+            List<CalendarEvent> lstTask = new List<CalendarEvent>();
 
-            cls.start = "2023-03-25T00:00:00";
-            cls.end = "2023-03-26T00:00:00";
-            cls.id = "2";
-            cls.text = "Zenual Event 2";
-           
-            cls.color = "#6aa84f";
-            lst.Add(cls);
+            if (dtAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtAll.Rows.Count; i++)
+                {
+                    CalendarEvent t = new CalendarEvent();
 
-            return Json(lst);
+                    t.id = dtAll.Rows[i]["TaskId"].ToString();
+                    t.start = dtAll.Rows[i]["Startdate"].ToString();
+                    t.end = dtAll.Rows[i]["Startdate"].ToString();
+                    t.text = dtAll.Rows[i]["Cnt"].ToString();
+                    t.color = dtAll.Rows[i]["color"].ToString();
+                    lstTask.Add(t);
+
+                }
+            }
+
+            return Json(lstTask);
         }
+
 
         [Route("Support/Index")]
         public IActionResult Index()

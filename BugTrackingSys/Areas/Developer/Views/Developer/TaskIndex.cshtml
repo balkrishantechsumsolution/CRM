@@ -1,5 +1,4 @@
-﻿
-
+﻿@model BugTrackingSys.Areas.Developer.Models.UsersRolesViewModel;
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 @{
     ViewData["Title"] = "Add User Page";
@@ -28,7 +27,7 @@
     <br />
 
     <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg" style="width: 100%;  height: 420px;  overflow: scroll;">
-        <form class="form-horizontal">
+        <form class="form-horizontal" enctype="multipart/form-data" method="post" asp-controller="Developer" asp-action="TaskIndex">
             <section class="main-content">
                 <div class="rows" style="min-height: 300px; margin: 0 auto; width: 50%">
                     <div class="col-lg-12">
@@ -45,34 +44,29 @@
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Name
                                                         </label>
-                                                        <input type="text"  class="form-control">
+                                                        <input type="text" asp-for="@Model.tasks.TaskName" class="form-control">
                                                     </div>
                                                       <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Start Date
                                                         </label>
-                                                        <input type="text" id="txtStartDate" class="form-control">
+                                                        <input type="text" asp-for="@Model.tasks.Startdate" id="txtStartDate" class="form-control">
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
-                                                            Task End Date
+                                                            Task Completion Date
                                                         </label>
-                                                        <input type="text" id="txtEndDate" class="form-control">
+                                                        <input type="text" asp-for="@Model.tasks.Enddate" id="txtEndDate" class="form-control">
                                                     </div>
 
-                                                    @* <div class="form-group">
-                                                    <label class="display-7  sFont text-center control-label">
-                                                    Project Description
-                                                    </label>
-                                                    <input type="text" asp-for="Description" class="form-control">
-                                                    </div>      *@
+                                                  
                                                     <div class="form-outline" style="margin:0;width: 700px;">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Description
                                                         </label>
                                                         <div>
-                                                            <textarea class="form-control" id="project_Description"></textarea>
+                                                            <textarea class="form-control" asp-for="@Model.tasks.TaskDescrpition" id="project_Description"></textarea>
                                                             <span  class="text-danger"></span>
                                                         </div>
                                                     </div>
@@ -80,25 +74,25 @@
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task assignment Name
                                                         </label>
-                                                        <select name="CreatedBy" class="form-control"></select>
+                                                        <select name="tasks.TaskAssignee" class="form-control" asp-items="@Model.AssigneeMainList"></select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Priority
                                                         </label>
-                                                        <select name="CreatedBy" class="form-control" ></select>
+                                                        <select name="tasks.PrioritySet" class="form-control" asp-items="@Model.PriorityList" class="form-control"></select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Status
                                                         </label>
-                                                        <select name="CreatedBy" class="form-control" ></select>
+                                                        <select name="tasks.PrioritySet" class="form-control" asp-items="@Model.TaskList" class="form-control"></select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Select Attachment:
                                                         </label>
-                                                        <input id="upload"  class="btn btn-primary" type="file" multiple>
+                                                        <input asp-for="@Model.FormFile" class="btn btn-primary" type="file" multiple>
                                                     </div>
                                                     
                                                     <br />

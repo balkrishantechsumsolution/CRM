@@ -10,6 +10,7 @@ namespace BugTrackingSys.Models
     }
     public class RoleModel: Role
     {
+        
         public string Id { get; set; }
         public string name { get; set; }
     }
