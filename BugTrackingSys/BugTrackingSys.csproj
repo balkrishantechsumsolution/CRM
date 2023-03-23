@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="2.0.0" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.13.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.15" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
@@ -19,6 +21,7 @@
     <Folder Include="Areas\Developer\Data\" />
     <Folder Include="Areas\Support\Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\Attachment\" />
   </ItemGroup>
 
 </Project>

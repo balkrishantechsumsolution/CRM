@@ -28,9 +28,8 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         public CalendarEvent cal { get; set; }
 
-        [Required]
-        [Display(Name = "File")]
-        public List<IFormFile> FormFile { get; set; }
+       
+        public List<IFormFile> files { get; set; }
 
 
 

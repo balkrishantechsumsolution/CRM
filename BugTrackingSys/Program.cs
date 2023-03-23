@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,17 +23,44 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(10);
 });
 
+builder.Services.AddSingleton<IFileProvider>(
+            new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//Attachment//")));
+
+builder.Services.AddMvc();
+
+
 var app = builder.Build();
+
+var env = builder.Environment;
 
 string connString = builder.Configuration.GetConnectionString("TrackBugsContext");
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (env.IsDevelopment())
 {
+    //app.UseDeveloperExceptionPage();
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+
+
+
+app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/Home/Error";
+        await next();
+    }
+});
 
 app.UseSession();
 
@@ -67,5 +95,7 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

@@ -45,12 +45,14 @@
                                                             Task Name
                                                         </label>
                                                         <input type="text" asp-for="@Model.tasks.TaskName" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.TaskName" class="text-danger"></span>
                                                     </div>
                                                       <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Start Date
                                                         </label>
                                                         <input type="text" asp-for="@Model.tasks.Startdate" id="txtStartDate" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.Startdate" class="text-danger"></span>
                                                     </div>
 
                                                     <div class="form-group">
@@ -58,6 +60,7 @@
                                                             Task Completion Date
                                                         </label>
                                                         <input type="text" asp-for="@Model.tasks.Enddate" id="txtEndDate" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.Enddate" class="text-danger"></span>
                                                     </div>
 
                                                   
@@ -75,6 +78,7 @@
                                                             Task assignment Name
                                                         </label>
                                                         <select name="tasks.TaskAssignee" class="form-control" asp-items="@Model.AssigneeMainList"></select>
+                                                        <span asp-validation-for="@Model.tasks.TaskAssignee" class="text-danger"></span>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
@@ -86,13 +90,13 @@
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Status
                                                         </label>
-                                                        <select name="tasks.PrioritySet" class="form-control" asp-items="@Model.TaskList" class="form-control"></select>
+                                                        <select name="tasks.TaskStatus" class="form-control" asp-items="@Model.TaskList" class="form-control"></select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Select Attachment:
                                                         </label>
-                                                        <input asp-for="@Model.FormFile" class="btn btn-primary" type="file" multiple>
+                                                        <input asp-for="@Model.files" class="btn btn-primary" type="file" multiple>
                                                     </div>
                                                     
                                                     <br />

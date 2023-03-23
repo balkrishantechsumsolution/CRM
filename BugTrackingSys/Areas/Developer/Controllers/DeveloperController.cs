@@ -8,7 +8,7 @@ using System.Security.Principal;
 using BugTrackingSys.Areas.Developer.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
-
+using System.Text;
 
 namespace BugTrackingSys.Areas.Developer.Controllers
 {
@@ -403,49 +403,103 @@ namespace BugTrackingSys.Areas.Developer.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult TaskIndex(UsersRolesViewModel loginModel)
         {
+            if (!ModelState.IsValid)
+            {
+                UsersRolesViewModel rvS = new UsersRolesViewModel();
+                rvS = GetSessionUser();
+                return View("TaskIndex", rvS);
+            }
+            UsersRolesViewModel rv = new UsersRolesViewModel();
+
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("FileName");
+            dt.Columns.Add("FileData");
+            dt.Columns.Add("FileType");
+
+           
+
             UsersRolesViewModel ur = new UsersRolesViewModel();
+            var strBase64 = "";
+            var contentType = "";
+            var path = "";
             try
             {
-                
-                long size = ur.FormFile.Sum(f => f.Length);
+
+                if (loginModel.files == null || loginModel.files.Count == 0)
+                    return Content("file not selected");
 
                 var filePaths = new List<string>();
-                foreach (var formFile in ur.FormFile)
+                foreach (var formFile in loginModel.files)
                 {
                     if (formFile.Length > 0)
                     {
                         // full path to file in temp location
-                        var filePath = Path.GetTempFileName(); //we are using Temp file name just for the example. Add your own file path.
-                        filePaths.Add(filePath);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        path = Path.Combine(
+                  Directory.GetCurrentDirectory(), "wwwroot//Attachment//",
+                  formFile.FileName );
+
+
+                        filePaths.Add(path);
+                        using (var stream = new FileStream(path, FileMode.Create))
                         {
+                            DataRow _row = dt.NewRow();
                             formFile.CopyToAsync(stream);
+                            strBase64 = ConvertToBase64(stream);
+                            contentType = formFile.ContentType;
+
+                            _row["FileName"] = path;
+                            _row["FileData"] = strBase64;
+                            _row["FileType"] = contentType.ToString();
+                            dt.Rows.Add(_row);
                         }
                     }
                 }
 
+                var userId = HttpContext.Session.GetString("LoginID");
+                var UserType = HttpContext.Session.GetString("UserType");
+
                 SqlParameter[] parameter = {
-                          new SqlParameter("@Name", loginModel.project.Name),
-                          new SqlParameter("@Description", loginModel.project.Description),
-                          new SqlParameter("@CreatedBy", loginModel.project.CreatedBy)
+                          new SqlParameter("@TaskId", loginModel.tasks.TaskId),
+                          new SqlParameter("@TaskName", loginModel.tasks.TaskName),
+                          new SqlParameter("@ProjectID", "1"),
+                          new SqlParameter("@TaskDescrpition", loginModel.tasks.TaskDescrpition),                      
+                          new SqlParameter("@TaskAssignee", loginModel.tasks.TaskAssignee),
+                          new SqlParameter("@TaskOwner", userId),
+                          new SqlParameter("@CreatedBy", userId),
+                          new SqlParameter("@CreatedOn", loginModel.tasks.Startdate),
+                          new SqlParameter("@Startdate", loginModel.tasks.Startdate),
+                          new SqlParameter("@Enddate", loginModel.tasks.Enddate),
+                          new SqlParameter("@PrioritySet", loginModel.tasks.PrioritySet),
+                          new SqlParameter("@TaskStatus", loginModel.tasks.TaskStatus),
+                          new SqlParameter("@IsActive", "1"),
+                          new SqlParameter("@CurrentStatus", loginModel.tasks.TaskStatus),
+                          new SqlParameter("@Stage","1"),
+                          new SqlParameter("@TaskAssigneeType", UserType),
+                          new SqlParameter("@OwnerType", UserType),
+                          new SqlParameter("@KeyField", ""),
+                          new SqlParameter("@taskFileDetailsData",dt),
+                       
+
                 };
 
-                DataTable dtAll = sqlhelper.ExecuteDataTable("insert_ProjectSP", parameter);
+                DataTable dtAll = sqlhelper.ExecuteDataTable("insert_TaskMasterSP", parameter);
 
                 if (dtAll.Rows.Count > 0)
                 {
 
-                    ViewBag.Message = "Project account Created.";
+                    ViewBag.Message = "Task Created.";
 
                 }
                 else
                 {
-                    ViewBag.Message = "Unable to created Project account.";
+                    ViewBag.Message = "Unable to created Task.";
                 }
 
 
 
-                ur = GetSessionUser();
+              
+                rv = GetSessionUser();
 
             }
 
@@ -453,14 +507,27 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             {
 
-                ViewBag.Message = "Error while creating Project";
+                ViewBag.Message = "Error while creating Task";
 
             }
 
-            return View("TaskIndex", ur);
+            return View("TaskIndex", rv);
 
         }
+        public string ConvertToBase64(Stream stream)
+        {
+            if (stream is MemoryStream memoryStream)
+            {
+                return Convert.ToBase64String(memoryStream.ToArray());
+            }
 
+            var bytes = new Byte[(int)stream.Length];
+
+            stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(bytes, 0, (int)stream.Length);
+
+            return Convert.ToBase64String(bytes);
+        }
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTrackingSys.Areas.Developer.Models
@@ -15,16 +16,31 @@ namespace BugTrackingSys.Areas.Developer.Models
         public int Count;
 
         public int TaskId { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "TaskName length can't be more than 100.")]
         public string TaskName { get; set; }
         public string ProjectID { get; set; }
         public string TaskDescrpition { get; set; }
+
+        [Required]
         public string TaskAssignee { get; set; }
         public string TaskOwner { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        [Required(ErrorMessage ="Please enter start date")]
+        [DataType(DataType.Date)]
         public DateTime Startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter end date")]
+        [DataType(DataType.Date)]
         public DateTime Enddate { get; set; }
+
+        [Required]
         public string PrioritySet { get; set; }
+
+        [Required]
         public string TaskStatus { get; set; }
         public bool IsActive { get; set; }
         public string CurrentStatus { get; set; }
@@ -42,16 +58,5 @@ namespace BugTrackingSys.Areas.Developer.Models
 
        
     }
-    public interface IFormFile
-    {
-        string ContentType { get; }
-        string ContentDisposition { get; }
-        IHeaderDictionary Headers { get; }
-        long Length { get; }
-        string Name { get; }
-        string FileName { get; }
-        Stream OpenReadStream();
-        void CopyTo(Stream target);
-        public Task CopyToAsync(Stream target);
-    }
+    
 }
