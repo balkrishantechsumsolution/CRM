@@ -14,9 +14,9 @@ namespace BugTrackingSys.Models
     }
     public class UsersModel: User
     {
-        [Required(ErrorMessage = "Please Enetr Name")]
+        [Required(ErrorMessage = "Please Enter UserName")]
         public string Id { get; set; }
-        [Required(ErrorMessage = "Please Enetr Password")]
+        [Required(ErrorMessage = "Please Enter Password")]
         public string Password { get; set; }
         public string Name { get; set; }
     }

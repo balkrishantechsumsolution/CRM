@@ -1,5 +1,6 @@
 ﻿using BugTrackingSys.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTrackingSys.Areas.Admin.Models
@@ -17,13 +18,16 @@ namespace BugTrackingSys.Areas.Admin.Models
         public int Count;
         public ProjectViewModel project { get; set; }
         public RoleModel role { get; set; }
+        
         public UsersModel user { get; set; }
 
-
-
         public List<User_RolesModel> User_RolesModelList { get; set; }
+
+        [Required]
         public List<UsersModel> UsersList { get; set; }
+      
         public List<RoleModel> RoleList { get; set; }
+       
         public List<ProjectViewModel> ProjectList { get; set; }
 
 
@@ -48,12 +52,8 @@ namespace BugTrackingSys.Areas.Admin.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
         public string CreatedBy { get; set; }
-
         public string CreatedOn { get; set; }
-
-
         public string Isactive { get; set; }
     }
 

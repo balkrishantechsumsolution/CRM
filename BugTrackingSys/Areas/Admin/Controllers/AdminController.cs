@@ -134,6 +134,12 @@ namespace BugTrackingSys.Areas.Department.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult AddUser(UsersRolesViewModel loginModel)
         {
+            if (!ModelState.IsValid)
+            {
+                UsersRolesViewModel rvS = new UsersRolesViewModel();
+                rvS = GetSessionUser();
+                return View("AddUser", rvS);
+            }
             UsersRolesViewModel ur = new UsersRolesViewModel();
 
             try
@@ -186,6 +192,12 @@ namespace BugTrackingSys.Areas.Department.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult AddRole(UsersRolesViewModel loginModel)
         {
+            if (!ModelState.IsValid)
+            {
+                UsersRolesViewModel rvS = new UsersRolesViewModel();
+                rvS = GetSessionUser();
+                return View("AddRole", rvS);
+            }
             UsersRolesViewModel ur = new UsersRolesViewModel();
             try
             {
@@ -234,8 +246,8 @@ namespace BugTrackingSys.Areas.Department.Controllers
 
         [Route("Admin/LoadRolelst")]
         public IActionResult LoadRolelst()
-        {  
-
+        {
+       
             try
             {
                 var draw = HttpContext.Request.Query["draw"].FirstOrDefault();
@@ -323,7 +335,7 @@ namespace BugTrackingSys.Areas.Department.Controllers
         [Route("Admin/LoadUserlst")]
         public IActionResult LoadUserlst()
         {
-
+           
             try
             {
                 var draw = HttpContext.Request.Query["draw"].FirstOrDefault();
