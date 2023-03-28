@@ -16,10 +16,19 @@
         height: 100% !important;
         overflow: unset !important;
     }
+
+    .task_area{
+        padding: 50px 0px;
+        margin-left: 125px;
+        width: 100%;
+    }
+
+    }
 </style>
 
+
 <link href="https://unpkg.com/tailwindcss@1.0/dist/tailwind.min.css" rel="stylesheet" />
-<div class="PageCLSFRM logo">
+<div class="  logo task_area ">
     <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg">
         <h1 class="display-4  sFont text-center">Add Task</h1>
     </div>
@@ -114,12 +123,16 @@
                                                     <br />
                                                     <hr />
                                                     
-                                                    <table  class="sFont text-center">
+
+
+                                                    <table  class="table sFont text-center">
+                                                        <thead></thead>
                                                         <tr>
-                                                            <th style="width:50px">File ID</th>
-                                                            <th style="width:120px">File Name</th>
-                                                            <th style="width:80px">Download</th>
+                                                            <th>File ID</th>
+                                                            <th >File Name</th>
+                                                            <th >Download</th>
                                                         </tr>
+                                                        </thead>
                                                          @if (Model.fileAttach!=null)
                                                         {
                                                             @if (Model.fileAttach.Count() > 0)

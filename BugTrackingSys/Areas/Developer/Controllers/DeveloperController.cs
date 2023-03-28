@@ -737,7 +737,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             {
 
                 //ViewBag.Message = "Error while creating Task";
-                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                return View("/Home/Error");
 
             }
 
