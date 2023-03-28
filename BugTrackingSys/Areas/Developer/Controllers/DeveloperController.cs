@@ -9,6 +9,8 @@ using BugTrackingSys.Areas.Developer.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.Hosting.Internal;
+using System.Diagnostics;
 
 namespace BugTrackingSys.Areas.Developer.Controllers
 {
@@ -66,9 +68,23 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             User_RolesModel loginUserRoleModel = new User_RolesModel();
             UsersModel usersModel = new UsersModel();
             RoleModel roleModel = new RoleModel();
+            Tasks tasks = new Tasks();
+            ProjectViewModel projectViewModel = new ProjectViewModel();
 
-            usersModel.Name = LoginID;
+  
+
+
+            usersModel.Id = "0";
+            usersModel.Password = "";
+
+           usersModel.Name = LoginID;
             roleModel.name = RoleName;
+            roleModel.Id = "0";
+
+            tasks.id = 0;
+            tasks.TaskId = 0;
+
+            projectViewModel.id = "0";
 
             loginUserRoleModel.user = usersModel;
             loginUserRoleModel.role = roleModel;
@@ -77,6 +93,9 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             loginModel.user = usersModel;
             loginModel.role = roleModel;
+            loginModel.tasks = tasks;
+            loginModel.project= projectViewModel;
+
 
             var selectList = new List<SelectListItem>();
 
@@ -134,6 +153,137 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             loginModel.UserMainList = selectUserList;
 
+            //List<FileViewModel> lstfileAttach = new List<FileViewModel>();
+            //FileViewModel fileAttach = new FileViewModel();
+            //lstfileAttach.Add(fileAttach);
+
+            //loginModel.fileViewModel = fileAttach;
+
+            //loginModel.fileAttach = lstfileAttach;
+
+            //Tasks task = new Tasks();
+            //loginModel.tasks = task;
+
+            var selectAssigneeList = new List<SelectListItem>();
+
+            selectAssigneeList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtAssigneeAll = sqlhelper.ExecuteDataTable("SP_GetUserlst");
+
+            if (dtAssigneeAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtAssigneeAll.Rows.Count; i++)
+                {
+                    selectAssigneeList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtAssigneeAll.Rows[i]["Id"].ToString(),
+                        Text = dtAssigneeAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            loginModel.AssigneeMainList = selectAssigneeList;
+
+            var selectPriorityList = new List<SelectListItem>();
+
+            selectPriorityList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtPriorityAll = sqlhelper.ExecuteDataTable("usp_TaskPriority");
+
+            if (dtPriorityAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtPriorityAll.Rows.Count; i++)
+                {
+                    selectPriorityList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtPriorityAll.Rows[i]["Id"].ToString(),
+                        Text = dtPriorityAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            loginModel.PriorityList = selectPriorityList;
+
+            var selectProjectList = new List<SelectListItem>();
+
+            selectProjectList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtProjectAll = sqlhelper.ExecuteDataTable("usp_Project");
+
+            if (dtProjectAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtProjectAll.Rows.Count; i++)
+                {
+                    selectProjectList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtProjectAll.Rows[i]["Id"].ToString(),
+                        Text = dtProjectAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            loginModel.ProjectList = selectProjectList;
+
+
+
+
+
+            var selectTaskstatusList = new List<SelectListItem>();
+
+            selectTaskstatusList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+            DataTable dtTaskstatusAll = sqlhelper.ExecuteDataTable("usp_Taskstatus");
+
+            if (dtTaskstatusAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtTaskstatusAll.Rows.Count; i++)
+                {
+                    selectTaskstatusList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtTaskstatusAll.Rows[i]["Name"].ToString(),
+                        Text = dtTaskstatusAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            loginModel.TaskList = selectTaskstatusList;
+
+
             return loginModel;
 
         }
@@ -158,13 +308,13 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 {
                     CalendarEvent t = new CalendarEvent();
 
-                    t.id =dtAll.Rows[i]["TaskId"].ToString();
+                    t.id = dtAll.Rows[i]["TaskId"].ToString();
                     t.start = dtAll.Rows[i]["Startdate"].ToString();
                     t.end = dtAll.Rows[i]["Startdate"].ToString();
                     t.text = dtAll.Rows[i]["Cnt"].ToString();
-                    t.color= dtAll.Rows[i]["color"].ToString();
+                    t.color = dtAll.Rows[i]["color"].ToString();
                     lstTask.Add(t);
-              
+
                 }
             }
 
@@ -201,7 +351,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 SqlParameter[] parameter = {
                           new SqlParameter("@TaskAssignee", userId),
                           new SqlParameter("@CreatedOn", CreatedOn),
-                         
+
                 };
 
                 DataTable dtAll = sqlhelper.ExecuteDataTable("usp_TaskMasterSP", parameter);
@@ -222,7 +372,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                         rm.ProjectID = dtAll.Rows[i]["ProjectID"].ToString();
                         rm.TaskDescrpition = dtAll.Rows[i]["TaskDescrpition"].ToString();
                         rm.TaskAssignee = dtAll.Rows[i]["TaskAssignee"].ToString();
-                        rm.TaskOwner = dtAll.Rows[i]["TaskOwner"].ToString();                       
+                        rm.TaskOwner = dtAll.Rows[i]["TaskOwner"].ToString();
                         rm.CreatedBy = dtAll.Rows[i]["CreatedBy"].ToString();
                         rm.CreatedOn = Convert.ToDateTime(dtAll.Rows[i]["CreatedOn"].ToString());
                         rm.Startdate = Convert.ToDateTime(dtAll.Rows[i]["Startdate"].ToString());
@@ -396,19 +546,70 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             ur.PriorityList = selectPriorityList;
 
-            return View(ur);
+
+            var selectProjectList = new List<SelectListItem>();
+
+            selectProjectList.Add(
+                    new SelectListItem
+                    {
+                        Value = "",
+                        Text = "Select",
+
+                    });
+
+
+            DataTable dtProjectAll = sqlhelper.ExecuteDataTable("usp_Project");
+
+            if (dtProjectAll.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtProjectAll.Rows.Count; i++)
+                {
+                    selectProjectList.Add(
+                    new SelectListItem
+                    {
+                        Value = dtProjectAll.Rows[i]["Id"].ToString(),
+                        Text = dtProjectAll.Rows[i]["Name"].ToString(),
+
+                    });
+                }
+            }
+
+            ur.ProjectList = selectProjectList;
+
+
+
+
+
+
+            //List<FileViewModel> lstfileAttach = new List<FileViewModel>();
+            //FileViewModel fileAttach = new FileViewModel();
+            //lstfileAttach.Add(fileAttach);
+            //ur.fileViewModel= fileAttach;
+
+            //ur.fileAttach = lstfileAttach;
+
+
+
+
+            return View("TaskIndex", ur);
         }
         [HttpPost]
         [Route("Developer/TaskIndex")]
         [AutoValidateAntiforgeryToken]
         public IActionResult TaskIndex(UsersRolesViewModel loginModel)
-        {
-            if (!ModelState.IsValid)
+        {           
+
+            var validator = new TasksValidator();
+            var valResult = validator.Validate(loginModel);
+
+            if (valResult.Errors.Count != 0)
             {
+                valResult.Errors.ForEach(x => ModelState.AddModelError(x.PropertyName, x.ErrorMessage));
                 UsersRolesViewModel rvS = new UsersRolesViewModel();
                 rvS = GetSessionUser();
                 return View("TaskIndex", rvS);
             }
+          
             UsersRolesViewModel rv = new UsersRolesViewModel();
 
             DataTable dt = new DataTable();
@@ -417,7 +618,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             dt.Columns.Add("FileData");
             dt.Columns.Add("FileType");
 
-           
+
 
             UsersRolesViewModel ur = new UsersRolesViewModel();
             var strBase64 = "";
@@ -437,7 +638,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                         // full path to file in temp location
                         path = Path.Combine(
                   Directory.GetCurrentDirectory(), "wwwroot//Attachment//",
-                  formFile.FileName );
+                  formFile.FileName);
 
 
                         filePaths.Add(path);
@@ -448,7 +649,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                             strBase64 = ConvertToBase64(stream);
                             contentType = formFile.ContentType;
 
-                            _row["FileName"] = path;
+                            _row["FileName"] = "wwwroot//Attachment//"+formFile.FileName;
                             _row["FileData"] = strBase64;
                             _row["FileType"] = contentType.ToString();
                             dt.Rows.Add(_row);
@@ -462,8 +663,8 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 SqlParameter[] parameter = {
                           new SqlParameter("@TaskId", loginModel.tasks.TaskId),
                           new SqlParameter("@TaskName", loginModel.tasks.TaskName),
-                          new SqlParameter("@ProjectID", "1"),
-                          new SqlParameter("@TaskDescrpition", loginModel.tasks.TaskDescrpition),                      
+                          new SqlParameter("@ProjectID", loginModel.project.id),
+                          new SqlParameter("@TaskDescrpition", loginModel.tasks.TaskDescrpition),
                           new SqlParameter("@TaskAssignee", loginModel.tasks.TaskAssignee),
                           new SqlParameter("@TaskOwner", userId),
                           new SqlParameter("@CreatedBy", userId),
@@ -479,11 +680,13 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                           new SqlParameter("@OwnerType", UserType),
                           new SqlParameter("@KeyField", ""),
                           new SqlParameter("@taskFileDetailsData",dt),
-                       
+
 
                 };
 
-                DataTable dtAll = sqlhelper.ExecuteDataTable("insert_TaskMasterSP", parameter);
+                DataTable dtAll = sqlhelper.ExecuteDataTableNon("insert_TaskMasterSP", parameter);
+
+                var m_TaskID = dtAll.Rows[0]["TaskID"].ToString();
 
                 if (dtAll.Rows.Count > 0)
                 {
@@ -498,22 +701,77 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
 
 
-              
+
                 rv = GetSessionUser();
+
+                List<FileViewModel> lstfileAttach = new List<FileViewModel>();
+
+                SqlParameter[] paraTask = {
+                          new SqlParameter("@TaskId", m_TaskID),
+               };
+
+                DataTable dtfileAttach = sqlhelper.ExecuteDataTable("usp_TaskFileAttachSP", paraTask);
+                for (int i = 0; i < dtfileAttach.Rows.Count; i++)
+                {
+                    FileViewModel fileAttach = new FileViewModel();
+
+                    fileAttach.FileID = Convert.ToInt32(dtfileAttach.Rows[i]["FileID"].ToString());
+                    fileAttach.FileName = dtfileAttach.Rows[i]["FileName"].ToString();
+                    fileAttach.FileData = dtfileAttach.Rows[i]["FileData"].ToString();
+                    fileAttach.FileType = dtfileAttach.Rows[i]["FileType"].ToString();
+                    fileAttach.IsActive = dtfileAttach.Rows[i]["IsActive"].ToString();
+
+                    //String path = HostingEnvironment.ApplicationPhysicalPath + "Image\\Capture.PNG";
+                    //string fname = Path.GetFileName(path);
+                    byte[] fileBytes = System.Convert.FromBase64String(fileAttach.FileData);
+                    //string fileName = fname;
+                    //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileAttach.FileName);
+
+                    lstfileAttach.Add(fileAttach);
+                }
+                rv.fileAttach = lstfileAttach;
 
             }
 
             catch (Exception ex)
-
             {
 
-                ViewBag.Message = "Error while creating Task";
+                //ViewBag.Message = "Error while creating Task";
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
             }
 
             return View("TaskIndex", rv);
 
         }
+
+        
+        [Route("Download/DownloadFile", Name = "DownloadFileEntry")]
+        [AutoValidateAntiforgeryToken]
+        public FileResult DownloadFile(int? fileid)
+        {
+            byte[] bytes=new byte[800];
+            string fileName="", contentType="";
+
+
+            SqlParameter[] paraTask = {
+                          new SqlParameter("@ID", fileid),
+               };
+
+            DataTable dtfileAttach = sqlhelper.ExecuteDataTable("usp_FileAttachByIDSP", paraTask);
+
+            if (dtfileAttach.Rows.Count > 0)
+            {
+                fileName = dtfileAttach.Rows[0]["FileName"].ToString();
+                bytes = Encoding.ASCII.GetBytes(dtfileAttach.Rows[0]["FileData"].ToString());
+                contentType = dtfileAttach.Rows[0]["FileType"].ToString();
+            }
+
+
+            return File(bytes, contentType, fileName);
+        }
+
+
         public string ConvertToBase64(Stream stream)
         {
             if (stream is MemoryStream memoryStream)
@@ -531,4 +789,5 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
 
     }
+
 }

@@ -326,10 +326,6 @@ namespace SqlHelper
             {
                 if (query.StartsWith("INSERT") | query.StartsWith("insert") | query.StartsWith("UPDATE") | query.StartsWith("update") | query.StartsWith("DELETE") | query.StartsWith("delete"))
                 {
-                    cmd.CommandType = CommandType.Text;
-                }
-                else
-                {
                     cmd.CommandType = CommandType.StoredProcedure;
                 }
                 for (int i = 0; i <= parameters.Length - 1; i++)

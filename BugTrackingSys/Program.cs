@@ -1,5 +1,10 @@
 using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json.Serialization;
 using System.Globalization;
+using FluentValidation.TestHelper;
+using FluentValidation;
+using System;
+using BugTrackingSys.Areas.Developer.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +34,11 @@ builder.Services.AddSingleton<IFileProvider>(
 
 builder.Services.AddMvc();
 
+//builder.Services.AddControllersWithViews().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+builder.Services.AddScoped<IValidator<UsersRolesViewModel>, TasksValidator>();
+
+builder.Services.AddScoped<IValidator<IFormFile>, FileValidator>();
 
 var app = builder.Build();
 
@@ -38,9 +48,9 @@ string connString = builder.Configuration.GetConnectionString("TrackBugsContext"
 
 if (env.IsDevelopment())
 {
-    //app.UseDeveloperExceptionPage();
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    app.UseDeveloperExceptionPage();
+    //app.UseExceptionHandler("/Home/Error");
+    //app.UseHsts();
 }
 else
 {
