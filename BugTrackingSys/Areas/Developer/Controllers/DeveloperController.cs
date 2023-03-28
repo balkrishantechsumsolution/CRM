@@ -82,8 +82,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             roleModel.name = RoleName;
             roleModel.Id = "0";
 
-            tasks.id = 0;
-            tasks.TaskId = 0;
+          
 
             projectViewModel.id = "0";
 
@@ -94,7 +93,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
             loginModel.user = usersModel;
             loginModel.role = roleModel;
-            loginModel.tasks = tasks;
+            
             loginModel.project = projectViewModel;
 
 
@@ -512,6 +511,8 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 string dtStartDate =DateTime.Now.ToString("dd/MM/yyyy");
                 string dtEndDate = DateTime.Now.ToString("dd/MM/yyyy");
 
+                rm.TaskId = 0;
+                rm.id = 0;
                 rm.Startdate = Convert.ToDateTime(dtStartDate);             
                 rm.Enddate = Convert.ToDateTime(dtEndDate);
 
@@ -714,31 +715,36 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             {
 
                 if (loginModel.files == null || loginModel.files.Count == 0)
-                    return Content("file not selected");
-
-                var filePaths = new List<string>();
-                foreach (var formFile in loginModel.files)
+                { 
+                
+                }
+                else
                 {
-                    if (formFile.Length > 0)
+
+                    var filePaths = new List<string>();
+                    foreach (var formFile in loginModel.files)
                     {
-                        // full path to file in temp location
-                        path = Path.Combine(
-                  Directory.GetCurrentDirectory(), "wwwroot//Attachment//",
-                  formFile.FileName);
-
-
-                        filePaths.Add(path);
-                        using (var stream = new FileStream(path, FileMode.Create))
+                        if (formFile.Length > 0)
                         {
-                            DataRow _row = dt.NewRow();
-                            formFile.CopyToAsync(stream);
-                            strBase64 = ConvertToBase64(stream);
-                            contentType = formFile.ContentType;
+                            // full path to file in temp location
+                            path = Path.Combine(
+                      Directory.GetCurrentDirectory(), "wwwroot//Attachment//",
+                      formFile.FileName);
 
-                            _row["FileName"] = "wwwroot//Attachment//" + formFile.FileName;
-                            _row["FileData"] = strBase64;
-                            _row["FileType"] = contentType.ToString();
-                            dt.Rows.Add(_row);
+
+                            filePaths.Add(path);
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                DataRow _row = dt.NewRow();
+                                formFile.CopyToAsync(stream);
+                                strBase64 = ConvertToBase64(stream);
+                                contentType = formFile.ContentType;
+
+                                _row["FileName"] = "wwwroot//Attachment//" + formFile.FileName;
+                                _row["FileData"] = strBase64;
+                                _row["FileType"] = contentType.ToString();
+                                dt.Rows.Add(_row);
+                            }
                         }
                     }
                 }
@@ -790,6 +796,8 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
                 rv = GetSessionUser();
 
+              
+
                 List<FileViewModel> lstfileAttach = new List<FileViewModel>();
 
                 SqlParameter[] paraTask = {
@@ -816,6 +824,12 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     lstfileAttach.Add(fileAttach);
                 }
                 rv.fileAttach = lstfileAttach;
+
+                Tasks rm = new Tasks();
+                rm.TaskId = 0;
+                rm.id = 0;
+
+                rv.tasks = rm;
 
             }
 
