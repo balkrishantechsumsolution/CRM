@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.Hosting.Internal;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BugTrackingSys.Areas.Developer.Controllers
 {
@@ -449,6 +450,9 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 {
                     Tasks rm = new Tasks();
 
+                    ProjectViewModel project= new ProjectViewModel();
+
+
                     rm.TaskId = Convert.ToInt32(dtTask.Rows[0]["TaskId"].ToString());
                     rm.TaskName = dtTask.Rows[0]["TaskName"].ToString();
                     rm.ProjectID = dtTask.Rows[0]["ProjectID"].ToString();
@@ -457,7 +461,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     rm.TaskOwner = dtTask.Rows[0]["TaskOwner"].ToString();
                     rm.CreatedBy = dtTask.Rows[0]["CreatedBy"].ToString();
                     rm.CreatedOn = Convert.ToDateTime(dtTask.Rows[0]["CreatedOn"].ToString());
-                    rm.Startdate = Convert.ToDateTime(dtTask.Rows[0]["Startdate"].ToString());
+                    rm.Startdate = Convert.ToDateTime(dtTask.Rows[0]["Startdate"].ToString());                   
                     rm.Enddate = Convert.ToDateTime(dtTask.Rows[0]["Enddate"].ToString());
                     rm.IsActive = Convert.ToBoolean(dtTask.Rows[0]["Isactive"].ToString());
                     rm.PrioritySet = dtTask.Rows[0]["PrioritySet"].ToString();
@@ -467,7 +471,10 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     rm.OwnerType = dtTask.Rows[0]["OwnerType"].ToString();
                     rm.Stage = Convert.ToInt32(dtTask.Rows[0]["Stage"].ToString());
 
+                    project.id = dtTask.Rows[0]["ProjectID"].ToString();
+
                     ur.tasks = rm;
+                    ur.project = project;
 
                 }
 
@@ -497,6 +504,18 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 }
 
                 ur.fileAttach = lstfileAttach;
+            }
+            else
+            {
+                Tasks rm = new Tasks();
+
+                string dtStartDate =DateTime.Now.ToString("dd/MM/yyyy");
+                string dtEndDate = DateTime.Now.ToString("dd/MM/yyyy");
+
+                rm.Startdate = Convert.ToDateTime(dtStartDate);             
+                rm.Enddate = Convert.ToDateTime(dtEndDate);
+
+                ur.tasks = rm;
             }
 
             var selectList = new List<SelectListItem>();
