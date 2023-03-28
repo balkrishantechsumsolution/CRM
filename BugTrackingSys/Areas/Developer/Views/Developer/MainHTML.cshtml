@@ -66,7 +66,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>TaskId</th>
-                                                                    <th>View</th>
+                                                                    <th>Edit</th>
                                                                     <th>TaskName</th>
                                                                     <th>ProjectID</th>
                                                                     <th>TaskDescrpition</th>
@@ -150,7 +150,7 @@
             [
                 { "data": "taskId", "name": "TaskId", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" target="_blank"  href="/Developer/TaskIndex">View</a>'; }
+                        "render": function (data, type, full, meta) { return '<a class="btn btn-info" target="_blank"  href="/Developer/TaskIndex?taskId=' + full.taskId + '"">Edit</a>'; }
                 },
                 
                 { "data": "taskName", "name": "TaskName", "autoWidth": true },

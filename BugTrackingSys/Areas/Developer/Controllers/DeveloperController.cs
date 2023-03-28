@@ -71,13 +71,13 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             Tasks tasks = new Tasks();
             ProjectViewModel projectViewModel = new ProjectViewModel();
 
-  
+
 
 
             usersModel.Id = "0";
             usersModel.Password = "";
 
-           usersModel.Name = LoginID;
+            usersModel.Name = LoginID;
             roleModel.name = RoleName;
             roleModel.Id = "0";
 
@@ -94,7 +94,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
             loginModel.user = usersModel;
             loginModel.role = roleModel;
             loginModel.tasks = tasks;
-            loginModel.project= projectViewModel;
+            loginModel.project = projectViewModel;
 
 
             var selectList = new List<SelectListItem>();
@@ -427,10 +427,77 @@ namespace BugTrackingSys.Areas.Developer.Controllers
         }
 
         [Route("Developer/TaskIndex")]
-        public IActionResult TaskIndex()
+        public IActionResult TaskIndex(int? taskId)
         {
             UsersRolesViewModel ur = new UsersRolesViewModel();
             ur = GetSessionUser();
+
+
+            if (taskId != null)
+            {
+                List<FileViewModel> lstfileAttach = new List<FileViewModel>();
+
+                SqlParameter[] paraTask = {
+                          new SqlParameter("@TaskId", taskId),
+               };
+
+                DataSet dtTaskDtl = sqlhelper.ExecuteDataSet("usp_TaskByIDSP", paraTask);
+
+                DataTable dtTask = dtTaskDtl.Tables[0];
+
+                if (dtTask.Rows.Count > 0)
+                {
+                    Tasks rm = new Tasks();
+
+                    rm.TaskId = Convert.ToInt32(dtTask.Rows[0]["TaskId"].ToString());
+                    rm.TaskName = dtTask.Rows[0]["TaskName"].ToString();
+                    rm.ProjectID = dtTask.Rows[0]["ProjectID"].ToString();
+                    rm.TaskDescrpition = dtTask.Rows[0]["TaskDescrpition"].ToString();
+                    rm.TaskAssignee = dtTask.Rows[0]["TaskAssignee"].ToString();
+                    rm.TaskOwner = dtTask.Rows[0]["TaskOwner"].ToString();
+                    rm.CreatedBy = dtTask.Rows[0]["CreatedBy"].ToString();
+                    rm.CreatedOn = Convert.ToDateTime(dtTask.Rows[0]["CreatedOn"].ToString());
+                    rm.Startdate = Convert.ToDateTime(dtTask.Rows[0]["Startdate"].ToString());
+                    rm.Enddate = Convert.ToDateTime(dtTask.Rows[0]["Enddate"].ToString());
+                    rm.IsActive = Convert.ToBoolean(dtTask.Rows[0]["Isactive"].ToString());
+                    rm.PrioritySet = dtTask.Rows[0]["PrioritySet"].ToString();
+                    rm.TaskStatus = dtTask.Rows[0]["TaskStatus"].ToString();
+                    rm.CurrentStatus = dtTask.Rows[0]["CurrentStatus"].ToString();
+                    rm.TaskAssigneeType = dtTask.Rows[0]["TaskAssigneeType"].ToString();
+                    rm.OwnerType = dtTask.Rows[0]["OwnerType"].ToString();
+                    rm.Stage = Convert.ToInt32(dtTask.Rows[0]["Stage"].ToString());
+
+                    ur.tasks = rm;
+
+                }
+
+
+
+                DataTable dtfileAttach = dtTaskDtl.Tables[1];
+
+
+
+                for (int i = 0; i < dtfileAttach.Rows.Count; i++)
+                {
+                    FileViewModel fileAttach = new FileViewModel();
+
+                    fileAttach.FileID = Convert.ToInt32(dtfileAttach.Rows[i]["FileID"].ToString());
+                    fileAttach.FileName = dtfileAttach.Rows[i]["FileName"].ToString();
+                    fileAttach.FileData = dtfileAttach.Rows[i]["FileData"].ToString();
+                    fileAttach.FileType = dtfileAttach.Rows[i]["FileType"].ToString();
+                    fileAttach.IsActive = dtfileAttach.Rows[i]["IsActive"].ToString();
+
+                    //String path = HostingEnvironment.ApplicationPhysicalPath + "Image\\Capture.PNG";
+                    //string fname = Path.GetFileName(path);
+                    byte[] fileBytes = System.Convert.FromBase64String(fileAttach.FileData);
+                    //string fileName = fname;
+                    //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileAttach.FileName);
+
+                    lstfileAttach.Add(fileAttach);
+                }
+
+                ur.fileAttach = lstfileAttach;
+            }
 
             var selectList = new List<SelectListItem>();
 
@@ -597,7 +664,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
         [Route("Developer/TaskIndex")]
         [AutoValidateAntiforgeryToken]
         public IActionResult TaskIndex(UsersRolesViewModel loginModel)
-        {           
+        {
 
             var validator = new TasksValidator();
             var valResult = validator.Validate(loginModel);
@@ -609,7 +676,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 rvS = GetSessionUser();
                 return View("TaskIndex", rvS);
             }
-          
+
             UsersRolesViewModel rv = new UsersRolesViewModel();
 
             DataTable dt = new DataTable();
@@ -649,7 +716,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                             strBase64 = ConvertToBase64(stream);
                             contentType = formFile.ContentType;
 
-                            _row["FileName"] = "wwwroot//Attachment//"+formFile.FileName;
+                            _row["FileName"] = "wwwroot//Attachment//" + formFile.FileName;
                             _row["FileData"] = strBase64;
                             _row["FileType"] = contentType.ToString();
                             dt.Rows.Add(_row);
@@ -745,13 +812,13 @@ namespace BugTrackingSys.Areas.Developer.Controllers
 
         }
 
-        
+
         [Route("Download/DownloadFile", Name = "DownloadFileEntry")]
         [AutoValidateAntiforgeryToken]
         public FileResult DownloadFile(int? fileid)
         {
-            byte[] bytes=new byte[800];
-            string fileName="", contentType="";
+            byte[] bytes = new byte[800];
+            string fileName = "", contentType = "";
 
 
             SqlParameter[] paraTask = {
