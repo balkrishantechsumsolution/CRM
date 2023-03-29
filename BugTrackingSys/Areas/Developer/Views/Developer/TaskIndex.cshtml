@@ -178,34 +178,36 @@
                                                     <br />
                                                     <br />
                                                     <hr />
-                                                    
 
 
-                                                    <table  class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
+
+                                                    @if (Model.fileAttach != null)
+                                                    {
+                                                         <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
                                                            width="100%">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="th-sm" style=" color: white;">File ID</th>
-                                                            <th class="th-sm" style=" color: white;">File Name</th>
-                                                            <th class="th-sm" style=" color: white;">Download</th>
-                                                        </tr>
-                                                        </thead>
-                                                         @if (Model.fileAttach!=null)
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">File ID</th>
+                                                                        <th class="th-sm" style=" color: white;">File Name</th>
+                                                                        <th class="th-sm" style=" color: white;">Download</th>
+                                                                    </tr>
+                                                                </thead>
+                                                        @if (Model.fileAttach.Count() > 0)
                                                         {
-                                                            @if (Model.fileAttach.Count() > 0)
-                                                            {
+                                                           
                                                                 foreach (var file in Model.fileAttach)
                                                                 {
-                                                                    <tr>
-                                                                        <td class="sFont">@file.FileID</td>
-                                                                        <td class="sFont">@file.FileName</td>
-                                                                        <td><a method="post" asp-controller="Developer" asp-action="DownloadFile" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <td class="sFont">@file.FileID</td>
+                                                                    <td class="sFont">@file.FileName</td>
+                                                                    <td><a method="post" asp-controller="Support" asp-action="DownloadFile" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
+                                                                </tr>
                                                                 }
-                                                            }
+                                                           
                                                         }
+                                                        </table>
+                                                    }
 
-                                                    </table>
                                                     <br />
                                                     <br />
 
