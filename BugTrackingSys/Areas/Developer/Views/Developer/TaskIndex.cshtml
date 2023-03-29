@@ -121,6 +121,36 @@
                                                     <input type="submit" class="btn btn-primary" value="Submit" asp-controller="Developer" asp-action="TaskIndex">
                                                     <br />
                                                     <br />
+                                                    <table class="table sFont text-center">
+                                                        <thead></thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Remarks</th>
+                                                            <th>RemarksOn</th>
+                                                            <th>CurrentStatus</th>
+                                                            <th>EndDate</th>
+                                                        </tr>
+                                                        </thead>
+                                                        @if (Model.taskRemarkList != null)
+                                                        {
+                                                            @if (Model.taskRemarkList.Count() > 0)
+                                                            {
+                                                                foreach (var taskRemark in Model.taskRemarkList)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@taskRemark.id</td>
+                                                                        <td>@taskRemark.Remarks</td>
+                                                                        <td>@taskRemark.RemarksOn</td>
+                                                                        <td>@taskRemark.CurrentStatus</td>
+                                                                        <td>@taskRemark.EndDate</td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        }
+
+                                                    </table>
+                                                    <br />
+                                                    <br />
                                                     <hr />
                                                     
 
@@ -151,6 +181,7 @@
                                                     </table>
                                                     <br />
                                                     <br />
+
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <div class="form-group">
                                                             <label class="control-label sFont text-center">

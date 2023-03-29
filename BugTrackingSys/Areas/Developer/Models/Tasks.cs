@@ -74,6 +74,24 @@ namespace BugTrackingSys.Areas.Developer.Models
 
 
     }
+    public class TasksRemark
+    {
+        public int id { get; set; }
 
-  
+        public int TaskId { get; set; }
+
+        public string Remarks { get; set; }
+
+        public string RemarksBy { get; set; }
+        public DateTime RemarksOn { get; set; }
+        public string PrioritySet { get; set; }
+        public string IsActive { get; set; }
+        public string CurrentStatus { get; set; }
+        public string Stage { get; set; }
+        public DateTime EndDate { get; set; }
+
+    }
+
+
+
 }

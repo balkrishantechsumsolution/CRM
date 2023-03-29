@@ -29,6 +29,9 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         public Tasks tasks { get; set; }
 
+        public TasksRemark tasksRemark { get; set; }
+
+
         [NotMapped]
         public FileViewModel fileViewModel { get; set; }
         [NotMapped]
@@ -42,6 +45,9 @@ namespace BugTrackingSys.Areas.Developer.Models
 
         [NotMapped]
         public List<Tasks> taskList { get; set; }
+
+        [NotMapped]
+        public List<TasksRemark> taskRemarkList { get; set; }
 
         [NotMapped]
         public List<SelectListItem> ProjectList { get; set; }

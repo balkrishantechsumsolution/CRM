@@ -503,6 +503,28 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                 }
 
                 ur.fileAttach = lstfileAttach;
+
+
+                List<TasksRemark> lstTaskRemark = new List<TasksRemark>();
+
+                DataTable dtTaskRemark = dtTaskDtl.Tables[2];
+
+                for (int i = 0; i < dtTaskRemark.Rows.Count; i++)
+                {
+                    TasksRemark tasksRemark = new TasksRemark();
+
+
+                    tasksRemark.id = Convert.ToInt32(dtTaskRemark.Rows[i]["id"].ToString());
+                    tasksRemark.TaskId = Convert.ToInt32(dtTaskRemark.Rows[i]["TaskId"].ToString());
+                    tasksRemark.Remarks = dtTaskRemark.Rows[i]["Remarks"].ToString();
+                    tasksRemark.RemarksOn = Convert.ToDateTime(dtTaskRemark.Rows[i]["RemarksOn"].ToString());
+                    tasksRemark.CurrentStatus = dtTaskRemark.Rows[i]["CurrentStatus"].ToString();
+                    tasksRemark.EndDate = Convert.ToDateTime(dtTaskRemark.Rows[i]["EndDate"].ToString());
+
+
+                    lstTaskRemark.Add(tasksRemark);
+                }
+                ur.taskRemarkList = lstTaskRemark;
             }
             else
             {
@@ -824,6 +846,32 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     lstfileAttach.Add(fileAttach);
                 }
                 rv.fileAttach = lstfileAttach;
+
+
+
+                List<TasksRemark> lstTaskRemark = new List<TasksRemark>();
+
+                SqlParameter[] paraTaskRemark = {
+                          new SqlParameter("@TaskId", m_TaskID),
+               };
+
+                DataTable dtTaskRemark = sqlhelper.ExecuteDataTable("usp_TaskRemarkSP", paraTaskRemark);
+                for (int i = 0; i < dtTaskRemark.Rows.Count; i++)
+                {
+                    TasksRemark tasksRemark = new TasksRemark();
+
+
+                    tasksRemark.id = Convert.ToInt32(dtTaskRemark.Rows[i]["id"].ToString());
+                    tasksRemark.TaskId = Convert.ToInt32(dtTaskRemark.Rows[i]["TaskId"].ToString());
+                    tasksRemark.Remarks = dtTaskRemark.Rows[i]["Remarks"].ToString();
+                    tasksRemark.RemarksOn = Convert.ToDateTime(dtTaskRemark.Rows[i]["RemarksOn"].ToString());
+                    tasksRemark.CurrentStatus = dtTaskRemark.Rows[i]["CurrentStatus"].ToString();
+                    tasksRemark.EndDate = Convert.ToDateTime(dtTaskRemark.Rows[i]["EndDate"].ToString());
+
+
+                    lstTaskRemark.Add(tasksRemark);
+                }
+                rv.taskRemarkList = lstTaskRemark;
 
                 Tasks rm = new Tasks();
                 rm.TaskId = 0;
