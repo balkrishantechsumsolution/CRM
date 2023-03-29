@@ -179,7 +179,7 @@
                                                                     <tr>
                                                                         <td class="sFont">@file.FileID</td>
                                                                         <td class="sFont">@file.FileName</td>
-                                                                        <td ><a method="post" asp-route="DownloadFileEntry" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
+                                                                        <td><a method="post" asp-controller="Support" asp-action="DownloadFile" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
                                                                     </tr>
                                                                 }
                                                             }

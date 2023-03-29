@@ -896,7 +896,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
         }
 
 
-        [Route("Download/DownloadFile", Name = "DownloadFileEntry")]
+        [Route("Developer/DownloadFile")]
         [AutoValidateAntiforgeryToken]
         public FileResult DownloadFile(int? fileid)
         {
