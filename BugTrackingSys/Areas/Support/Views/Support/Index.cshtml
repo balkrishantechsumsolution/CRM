@@ -1,11 +1,12 @@
 ﻿@model BugTrackingSys.Areas.Support.Models.UsersRolesViewModel;
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery;
+
 @{
     ViewData["Title"] = "Dashboard Support Page";
     Layout = "~/Areas/Support/Views/Shared/_Layout.cshtml";
     var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
-
 }
+
 
 <script src="~/lib/daypilot/daypilot-all.min.js" asp-append-version="true"></script>
 
@@ -34,92 +35,20 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="hfCreatedOn" name="CreatedOn" />
 
-
-<script id="stuff_you_want" type="text/plain">
-         <link href="https://unpkg.com/tailwindcss@1.0/dist/tailwind.min.css" rel="stylesheet" />
-    <div class="PageCLSFRM logo" >
-        <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg">
-            <h1 class="display-4  sFont text-center">Add Project</h1>
-        </div>
-        <br />
-        <br />
-
-        <div class="mx-2 grid grid-cols-3 gap-2  bg-green-600 rounded-lg" style="width: 100%;  height: 420px;  overflow: scroll;">
-            <form class="form-horizontal" asp-action="AddProject">
-                <section class="main-content">
-                    <div class="rows" style="min-height: 300px; margin: 0 auto; width: 50%">
-                        <div class="col-lg-12">
-
-                            <div class="">
-                                <div class="resp-tabs-container ver_1">
-                                    <div style="margin-top: 10px;">
-                                        <div>
-                                            <div class="rows">
-                                                <div id="divElement">
-                                                    <div class="box-body box-body-open">
-                                                        <br><br>
-                                                        <div class="form-group">
-                                                            <label class="display-7  sFont text-center control-label">
-                                                                Project Name
-                                                            </label>
-                                                            <input type="text" asp-for="" class="form-control">
-                                                        </div>
-
-    @* <div class="form-group">
-                                                        <label class="display-7  sFont text-center control-label">
-                                                        Project Description
-                                                        </label>
-                                                        <input type="text" asp-for="@Model.project.Description" class="form-control">
-                                                        </div>      *@
-                                                        <div class="form-outline" style="margin:0;width: 700px;">
-                                                            <label class="display-7  sFont text-center control-label">
-                                                                Description
-                                                            </label>
-                                                            <div>
-                                                                <textarea  asp-for="project_Description" class="form-control"></textarea>
-                                                                <span asp-validation-for="" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="display-7  sFont text-center control-label">
-                                                                Created By
-                                                            </label>
-                                                            <select name="CreatedBy" class="form-control" asp-items=""></select>
-                                                        </div>
-                                                        <br />
-                                                        <input type="submit" class="btn btn-primary" value="Submit">
-                                                        <br />
-                                                        <br />
-                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                            <div class="form-group">
-                                                                <label class="control-label sFont text-center">
-    @Html.Raw(ViewBag.Message)
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </form>
-        </div>
-    </div>
+<script id="gridScpt" type="text/html">
 
     
+    
+   
 
+     
 </script>
+
 <script>
+
+    var CreatedOn = "";
 
 
 
@@ -172,7 +101,7 @@
         { name: "Priority 3", id: 3 },
     ];
 
-    var html = document.getElementById("stuff_you_want").innerHTML;
+    
 
     const calendar = new DayPilot.Month("dp", {
 
@@ -183,57 +112,69 @@
         eventHeight: 30,
         onTimeRangeSelected: async args => {
 
-            var staff = [{ "id": "group_1", "name": "Resource 1", "expanded": true, "children": [{ "id": "1", "name": "Adam Emerson" }, { "id": "2", "name": "Cheryl Irwin" }] }, { "id": "group_2", "name": "Resource 2", "expanded": true, "children": [{ "id": "3", "name": "Emily Jameson" }, { "id": "4", "name": "Eva Rodriguez" }] }, { "id": "group_3", "name": "Resource 3", "expanded": true, "children": [{ "id": "5", "name": "Eliah Kingston" }] }, { "id": "group_4", "name": "Resource 4", "expanded": true, "children": [{ "id": "6", "name": "Taylor Niles" }] }, { "id": "group_5", "name": "Resource 5", "expanded": true, "children": [{ "id": "7", "name": "Jo Thomas" }] }];
-            //dp.resources.forEach(function (value) { staff.push(value['children']) })
+            //var staff = [{ "id": "group_1", "name": "Resource 1", "expanded": true, "children": [{ "id": "1", "name": "Adam Emerson" }, { "id": "2", "name": "Cheryl Irwin" }] }, { "id": "group_2", "name": "Resource 2", "expanded": true, "children": [{ "id": "3", "name": "Emily Jameson" }, { "id": "4", "name": "Eva Rodriguez" }] }, { "id": "group_3", "name": "Resource 3", "expanded": true, "children": [{ "id": "5", "name": "Eliah Kingston" }] }, { "id": "group_4", "name": "Resource 4", "expanded": true, "children": [{ "id": "6", "name": "Taylor Niles" }] }, { "id": "group_5", "name": "Resource 5", "expanded": true, "children": [{ "id": "7", "name": "Jo Thomas" }] }];
+            ////dp.resources.forEach(function (value) { staff.push(value['children']) })
 
-            const form = [
-                { name: "Start Date", id: "start", type: 'date', dateFormat: 'd/M/yyyy' },
-                { name: "End Date", id: "end", type: 'date', dateFormat: 'd/M/yyyy' },
-                { name: 'Description', id: 'description', type: 'textarea', onValidate: validateTextRequired },
-                { name: "Employee", id: "resource", options: flatten(staff) },
-                { name: "Resource", id: "resource", options: resources, onValidate: validateTextRequired },
-                {
-                    name: "Display as", id: "displayAs", type: "radio", options: [
-                        {
-                            name: "Event", id: "event", children: [
-                                { name: "Start", id: "start", type: "date" },
-                                { name: "End", id: "end", type: "date" },
-                                { name: "Resource", id: "resource", options: resources },
-                            ]
-                        },
-                        {
-                            name: "Task", id: "task", children: [
-                                { name: "Priority", id: "priority", options: priorities },
-                            ]
-                        }
-                    ]
-                }
-            ];
-            //const modal = await DayPilot.Modal.prompt("Create a new event:", "Event");
-            const data = {
-                start: args.start,
-                end: args.start,
-            };
+            //const form = [
+            //    { name: "Start Date", id: "start", type: 'date', dateFormat: 'd/M/yyyy' },
+            //    { name: "End Date", id: "end", type: 'date', dateFormat: 'd/M/yyyy' },
+            //    { name: 'Description', id: 'description', type: 'textarea', onValidate: validateTextRequired },
+            //    { name: "Employee", id: "resource", options: flatten(staff) },
+            //    { name: "Resource", id: "resource", options: resources, onValidate: validateTextRequired },
+            //    {
+            //        name: "Display as", id: "displayAs", type: "radio", options: [
+            //            {
+            //                name: "Event", id: "event", children: [
+            //                    { name: "Start", id: "start", type: "date" },
+            //                    { name: "End", id: "end", type: "date" },
+            //                    { name: "Resource", id: "resource", options: resources },
+            //                ]
+            //            },
+            //            {
+            //                name: "Task", id: "task", children: [
+            //                    { name: "Priority", id: "priority", options: priorities },
+            //                ]
+            //            }
+            //        ]
+            //    }
+            //];
+            ////const modal = await DayPilot.Modal.prompt("Create a new event:", "Event");
+            //const data = {
+            //    start: args.start,
+            //    end: args.start,
+            //};
 
-            const modal = await DayPilot.Modal.form(form, data);
-            //var modal = new DayPilot.Modal();
+            //const modal = await DayPilot.Modal.form(form, data);
 
-            //modal.showHtml(html);
+
+
+            
+
+            //var html = document.getElementById("gridScpt").innerHTML;
+           
+
+
+             var url = args.start;
+            var urlPath = 'https://localhost:7022/Support/MainHTML?CreatedOn=' + url;
+            var html = '<iframe id="showskill" style="width: 715px; height: 600px; border: 0" scrolling="no" src="' + urlPath + '"><\/iframe>'
+            var modal = new DayPilot.Modal();
+
+            modal.showHtml(html);
 
             //tinymce.init({ selector: "#project_Description" });
 
-            calendar.clearSelection();
-            if (modal.canceled) {
-                return;
-            }
-            const params = {
-                start: args.start,
-                end: args.end,
-                text: modal.result,
-                resource: args.resource
-            };
-            const { data: result } = await DayPilot.Http.post("/Support/events", params);
-            calendar.events.add(result);
+            //calendar.clearSelection();
+            //if (modal.canceled) {
+            //    return;
+            //}
+            //const params = {
+            //    start: args.start,
+            //    end: args.end,
+            //    text: modal.result,
+            //    resource: args.resource
+            //};
+            //const { data: result } = await DayPilot.Http.post("/Support/events", params);
+            //calendar.events.add(result);
 
             //window.$("#exampleModal").modal("show");
             //alert(1);
@@ -328,7 +269,7 @@
     });
     //calendar.init();
 
-    var eventdata = [];
+   
     $(document).ready(function () {
         var url = '@Url.Action("events", "Support")'
 
@@ -341,7 +282,7 @@
             data: '',
             success: function (response) {
                 calendar.init();
-
+             
                 const events = response
                 calendar.update({
                     events
@@ -473,3 +414,4 @@
     }
 
 </style>
+
