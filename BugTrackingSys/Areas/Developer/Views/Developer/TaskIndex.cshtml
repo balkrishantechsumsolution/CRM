@@ -52,31 +52,42 @@
                                                     <br><br>
                                                     <br><br>
                                                     <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
-                                                           width="100%">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="th-sm" style=" color: white;" >ID</th>
-                                                            <th class="th-sm" style=" color: white;">RemarksBy</th>
-                                                            <th class="th-sm" style=" color: white;" >Remarks</th>
-                                                            <th class="th-sm" style=" color: white;" >RemarksOn</th>
-                                                            <th class="th-sm" style=" color: white;" >CurrentStatus</th>
-                                                            <th class="th-sm" style=" color: white;" >EndDate</th>
-                                                        </tr>
-                                                        </thead>
+                                                           width="100%">                                                        
                                                         @if (Model.taskRemarkList != null)
                                                         {
                                                             @if (Model.taskRemarkList.Count() > 0)
                                                             {
                                                                 foreach (var taskRemark in Model.taskRemarkList)
                                                                 {
+                                                                    
                                                                     <tr>
+                                                                        <th class="th-sm" style=" color: white;">ID</th>
                                                                         <td class="sFont">@taskRemark.id</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">RemarksBy</th>
                                                                         <td class="sFont">@Html.Raw(@taskRemark.RemarksBy)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">Remarks</th>
                                                                         <td class="sFont">@Html.Raw(@taskRemark.Remarks)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">RemarksOn</th>
                                                                         <td class="sFont">@taskRemark.RemarksOn</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">CurrentStatus</th>
                                                                         <td class="sFont">@taskRemark.CurrentStatus</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">EndDate</th>
                                                                         <td class="sFont">@taskRemark.EndDate</td>
                                                                     </tr>
+                                                                       
+                                                                        
+                                                                       
+                                                                      
                                                                 }
                                                             }
                                                         }
