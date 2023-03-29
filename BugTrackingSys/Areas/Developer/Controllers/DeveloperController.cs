@@ -520,6 +520,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     tasksRemark.RemarksOn = Convert.ToDateTime(dtTaskRemark.Rows[i]["RemarksOn"].ToString());
                     tasksRemark.CurrentStatus = dtTaskRemark.Rows[i]["CurrentStatus"].ToString();
                     tasksRemark.EndDate = Convert.ToDateTime(dtTaskRemark.Rows[i]["EndDate"].ToString());
+                    tasksRemark.RemarksBy = dtTaskRemark.Rows[i]["RemarksBy"].ToString();
 
 
                     lstTaskRemark.Add(tasksRemark);
@@ -867,6 +868,7 @@ namespace BugTrackingSys.Areas.Developer.Controllers
                     tasksRemark.RemarksOn = Convert.ToDateTime(dtTaskRemark.Rows[i]["RemarksOn"].ToString());
                     tasksRemark.CurrentStatus = dtTaskRemark.Rows[i]["CurrentStatus"].ToString();
                     tasksRemark.EndDate = Convert.ToDateTime(dtTaskRemark.Rows[i]["EndDate"].ToString());
+                    tasksRemark.RemarksBy = dtTaskRemark.Rows[i]["RemarksBy"].ToString();
 
 
                     lstTaskRemark.Add(tasksRemark);

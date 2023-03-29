@@ -48,6 +48,42 @@
                                         <div class="rows">
                                             <div id="divElement">
                                                 <div class="box-body box-body-open">
+
+                                                    <br><br>
+                                                    <br><br>
+                                                    <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
+                                                           width="100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="th-sm" style=" color: white;" >ID</th>
+                                                            <th class="th-sm" style=" color: white;">RemarksBy</th>
+                                                            <th class="th-sm" style=" color: white;" >Remarks</th>
+                                                            <th class="th-sm" style=" color: white;" >RemarksOn</th>
+                                                            <th class="th-sm" style=" color: white;" >CurrentStatus</th>
+                                                            <th class="th-sm" style=" color: white;" >EndDate</th>
+                                                        </tr>
+                                                        </thead>
+                                                        @if (Model.taskRemarkList != null)
+                                                        {
+                                                            @if (Model.taskRemarkList.Count() > 0)
+                                                            {
+                                                                foreach (var taskRemark in Model.taskRemarkList)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="sFont">@taskRemark.id</td>
+                                                                        <td class="sFont">@Html.Raw(@taskRemark.RemarksBy)</td>
+                                                                        <td class="sFont">@Html.Raw(@taskRemark.Remarks)</td>
+                                                                        <td class="sFont">@taskRemark.RemarksOn</td>
+                                                                        <td class="sFont">@taskRemark.CurrentStatus</td>
+                                                                        <td class="sFont">@taskRemark.EndDate</td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        }
+
+                                                    </table>
+
+                                                    <br><br>
                                                     <br><br>
                                                     <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
@@ -121,46 +157,16 @@
                                                     <input type="submit" class="btn btn-primary" value="Submit" asp-controller="Developer" asp-action="TaskIndex">
                                                     <br />
                                                     <br />
-                                                    <table class="table sFont text-center">
-                                                        <thead></thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Remarks</th>
-                                                            <th>RemarksOn</th>
-                                                            <th>CurrentStatus</th>
-                                                            <th>EndDate</th>
-                                                        </tr>
-                                                        </thead>
-                                                        @if (Model.taskRemarkList != null)
-                                                        {
-                                                            @if (Model.taskRemarkList.Count() > 0)
-                                                            {
-                                                                foreach (var taskRemark in Model.taskRemarkList)
-                                                                {
-                                                                    <tr>
-                                                                        <td>@taskRemark.id</td>
-                                                                        <td>@taskRemark.Remarks</td>
-                                                                        <td>@taskRemark.RemarksOn</td>
-                                                                        <td>@taskRemark.CurrentStatus</td>
-                                                                        <td>@taskRemark.EndDate</td>
-                                                                    </tr>
-                                                                }
-                                                            }
-                                                        }
-
-                                                    </table>
-                                                    <br />
-                                                    <br />
                                                     <hr />
                                                     
 
 
                                                     <table  class="table sFont text-center">
-                                                        <thead></thead>
+                                                        <thead>
                                                         <tr>
-                                                            <th>File ID</th>
-                                                            <th >File Name</th>
-                                                            <th >Download</th>
+                                                            <th class="th-sm" style=" color: white;">File ID</th>
+                                                            <th class="th-sm" style=" color: white;">File Name</th>
+                                                            <th class="th-sm" style=" color: white;">Download</th>
                                                         </tr>
                                                         </thead>
                                                          @if (Model.fileAttach!=null)
@@ -170,9 +176,9 @@
                                                                 foreach (var file in Model.fileAttach)
                                                                 {
                                                                     <tr>
-                                                                        <td>@file.FileID</td>
-                                                                        <td>@file.FileName</td>
-                                                                        <td><a method="post" asp-route="DownloadFileEntry" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
+                                                                        <td class="sFont">@file.FileID</td>
+                                                                        <td class="sFont">@file.FileName</td>
+                                                                        <td ><a method="post" asp-route="DownloadFileEntry" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
                                                                     </tr>
                                                                 }
                                                             }
