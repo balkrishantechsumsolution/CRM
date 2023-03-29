@@ -55,17 +55,21 @@
                                             <div id="divElement">
                                                 <div class="box-body box-body-open">
 
-                                                    <br><br>
-                                                    <br><br>
-                                                    <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
-                                                           width="100%">                                                        
-                                                        @if (Model.taskRemarkList != null)
-                                                        {
+                                                    @if (Model.taskRemarkList != null)
+                                                    {
+                                                        <br>
+
+                                                        <br>
+                                                        <br>
+
+                                                        <br>
+                                                        <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
+                                                           width="100%">
                                                             @if (Model.taskRemarkList.Count() > 0)
                                                             {
                                                                 foreach (var taskRemark in Model.taskRemarkList)
                                                                 {
-                                                                    
+
                                                                     <tr>
                                                                         <th class="th-sm" style=" color: white;">ID</th>
                                                                         <td class="sFont">@taskRemark.id</td>
@@ -90,22 +94,20 @@
                                                                         <th class="th-sm" style=" color: white;">EndDate</th>
                                                                         <td class="sFont">@taskRemark.EndDate</td>
                                                                     </tr>
-                                                                   <tr  class="trRemark">
-                                                                        <td colspan="2"></td>
-                                                                    </tr>
-                                                                       
-                                                                        
-                                                                       
-                                                                      
+
+                                                                    <tr class="trRemark">    <td colspan="2"></td> </tr>
+
+
                                                                 }
                                                             }
-                                                        }
+                                                        </table>
+                                                        <br>
 
-                                                    </table>
+                                                        <br>
+                                                        <br>
 
-                                                    <br><br>
-                                                    <br><br>
-                                                    <div class="form-group">
+                                                        <br>
+                                                    }  <div class="form-group">
                                                         <label class="display-7  sFont text-center control-label">
                                                             Task Name
                                                         </label>
