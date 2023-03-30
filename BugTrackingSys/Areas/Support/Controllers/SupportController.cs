@@ -914,7 +914,7 @@ namespace BugTrackingSys.Areas.Support.Controllers
             if (dtfileAttach.Rows.Count > 0)
             {
                 fileName = dtfileAttach.Rows[0]["FileName"].ToString();
-                bytes = Encoding.ASCII.GetBytes(dtfileAttach.Rows[0]["FileData"].ToString());
+                bytes = Convert.FromBase64String(dtfileAttach.Rows[0]["FileData"].ToString());
                 contentType = dtfileAttach.Rows[0]["FileType"].ToString();
             }
 
