@@ -155,7 +155,14 @@
 
 
              var url = args.start;
-            var urlPath = 'https://localhost:7022/Developer/MainHTML?CreatedOn=' + url;
+            var urlPath = '';
+
+            if (location.href.indexOf("localhost") != -1) {
+                urlPath = 'http://localhost:7022/Developer/MainHTML?CreatedOn=' + url;
+            }
+            else {
+                urlPath = 'http://ticketcoredeploy.tsdemo.co.in/Developer/MainHTML?CreatedOn=' + url;
+            }
             var html = '<iframe id="showskill" style="width: 715px; height: 600px; border: 0" scrolling="no" src="' + urlPath + '"><\/iframe>'
             var modal = new DayPilot.Modal();
 

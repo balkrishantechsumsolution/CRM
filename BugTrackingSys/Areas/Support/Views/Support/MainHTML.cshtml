@@ -114,7 +114,11 @@
 
     var appUrl = '';
     if (location.href.indexOf("localhost") != -1) {
-        appUrl = "https://localhost:7022/";
+        appUrl = "http://localhost:7022/";
+    }
+    else
+    {
+        appUrl = "http://ticketcoredeploy.tsdemo.co.in/";
     }
 
     function ActualDateFormat(t_DOB) {
@@ -129,7 +133,15 @@
         
         //var date = @Convert.ToDateTime(@ViewBag.CreatedOn).ToString("yyyy-MM-dd");
        
-        var urlPath = 'https://localhost:7022/Support/LoadTasklst?CreatedOn=@ViewBag.CreatedOn';
+        //var urlPath = 'https://ticketcoredeploy.tsdemo.co.in/Support/LoadTasklst?CreatedOn=@ViewBag.CreatedOn';
+
+        var urlPath = '';
+        if (location.href.indexOf("localhost") != -1) {
+            urlPath = 'https://localhost:7022/Support/LoadTasklst?CreatedOn=@ViewBag.CreatedOn';
+        }
+        else {
+            urlPath = 'http://ticketcoredeploy.tsdemo.co.in/Support/LoadTasklst?CreatedOn=@ViewBag.CreatedOn';
+        }
 
         $("#example").DataTable({
             "processing": true, // for show progress bar

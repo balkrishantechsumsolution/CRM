@@ -84,11 +84,14 @@
 
 <script type="text/javascript">
 
-    var appUrl = '';
+   var appUrl = '';
     if (location.href.indexOf("localhost") != -1) {
         appUrl = "https://localhost:7022/";
     }
-
+    else
+    {
+        appUrl = "http://ticketcoredeploy.tsdemo.co.in/";
+    }
 
     $(document).ready(function () {
         $("#example").DataTable({

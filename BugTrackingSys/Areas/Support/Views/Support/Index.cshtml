@@ -39,11 +39,11 @@
 
 <script id="gridScpt" type="text/html">
 
-    
-    
-   
 
-     
+
+
+
+
 </script>
 
 <script>
@@ -101,7 +101,7 @@
         { name: "Priority 3", id: 3 },
     ];
 
-    
+
 
     const calendar = new DayPilot.Month("dp", {
 
@@ -148,14 +148,22 @@
 
 
 
-            
+
 
             //var html = document.getElementById("gridScpt").innerHTML;
-           
+
 
 
              var url = args.start;
-            var urlPath = 'https://localhost:7022/Support/MainHTML?CreatedOn=' + url;
+            //var urlPath = 'https://ticketcoredeploy.tsdemo.co.in/Support/MainHTML?CreatedOn=' + url;
+
+             var urlPath = '';
+        if (location.href.indexOf("localhost") != -1) {
+            urlPath = 'http://localhost:7022/Support/MainHTML?CreatedOn=' + url;
+        }
+        else {
+            urlPath = 'http://ticketcoredeploy.tsdemo.co.in/Support/MainHTML?CreatedOn=' + url;
+        }
             var html = '<iframe id="showskill" style="width: 715px; height: 600px; border: 0" scrolling="no" src="' + urlPath + '"><\/iframe>'
             var modal = new DayPilot.Modal();
 
@@ -269,7 +277,7 @@
     });
     //calendar.init();
 
-   
+
     $(document).ready(function () {
         var url = '@Url.Action("events", "Support")'
 
@@ -282,7 +290,7 @@
             data: '',
             success: function (response) {
                 calendar.init();
-             
+
                 const events = response
                 calendar.update({
                     events
