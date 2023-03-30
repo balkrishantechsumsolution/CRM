@@ -256,12 +256,10 @@
     <script>
         $(function () {
             $('#txtStartDate').datepicker({
-                dateFormat: "dd/mm/yy",
-                yearRange: '2010:2019',
+                dateFormat: "dd/mm/yy",                
                 changeMonth: true,
-                changeYear: true,
-                maxDate: '0',
-                yearRange: "-150:+0",
+                changeYear: true,                
+                yearRange: '-10:+10',
                 onSelect: function (date) {
 
                     //GetValidateImmunizationDate();
@@ -270,12 +268,10 @@
             //$('#txtStartDate').datepicker('setDate', 'today');
 
             $('#txtEndDate').datepicker({
-                dateFormat: "dd/mm/yy",
-                yearRange: '2010:2019',
+                dateFormat: "dd/mm/yy",                
                 changeMonth: true,
-                changeYear: true,
-                maxDate: '0',
-                yearRange: "-150:+0",
+                changeYear: true,                
+                yearRange: '-10:+10',
                 onSelect: function (date) {
 
                     //GetValidateImmunizationDate();
