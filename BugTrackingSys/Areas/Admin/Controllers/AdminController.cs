@@ -2,15 +2,15 @@
 using SqlHelper;
 using System.Data.SqlClient;
 using System.Data;
-using BugTrackingSys.Models;
+using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Principal;
-using BugTrackingSys.Areas.Admin.Models;
+using LeedManagement.Areas.Admin.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 
 
-namespace BugTrackingSys.Areas.Department.Controllers
+namespace LeedManagement.Areas.Department.Controllers
 {
     [Area("Admin")]
     public class AdminController : Controller
@@ -134,18 +134,18 @@ namespace BugTrackingSys.Areas.Department.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult AddUser(UsersRolesViewModel loginModel)
         {
-            if (!ModelState.IsValid)
-            {
-                UsersRolesViewModel rvS = new UsersRolesViewModel();
-                rvS = GetSessionUser();
-                return View("AddUser", rvS);
-            }
-            UsersRolesViewModel ur = new UsersRolesViewModel();
-
+            //if (!ModelState.IsValid)
+            //{
+            //    UsersRolesViewModel rvS = new UsersRolesViewModel();
+            //    rvS = GetSessionUser();
+            //    return View("AddUser", rvS);
+            //}
+        
             try
             {
+                loginModel.user.Id = "0";
                 SqlParameter[] parameter = {
-                          new SqlParameter("@uname", loginModel.user.Id),
+                          new SqlParameter("@uname", loginModel.user.Name),
                           new SqlParameter("@pass", loginModel.user.Password),
                           new SqlParameter("@roleid", loginModel.role.Id)
                 };
@@ -162,7 +162,7 @@ namespace BugTrackingSys.Areas.Department.Controllers
                 {
                     ViewBag.Message = "Unable to created User account.Wrong user name or password.";
                 }
-                ur = GetSessionUser();
+               
             }
 
             catch (Exception ex)
@@ -172,6 +172,10 @@ namespace BugTrackingSys.Areas.Department.Controllers
                 ViewBag.Message = "Error while creating user account";
 
             }
+
+            UsersRolesViewModel ur = new UsersRolesViewModel();
+
+            ur = GetSessionUser();
 
             return View("AddUser", ur);
 
@@ -192,12 +196,12 @@ namespace BugTrackingSys.Areas.Department.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult AddRole(UsersRolesViewModel loginModel)
         {
-            if (!ModelState.IsValid)
-            {
-                UsersRolesViewModel rvS = new UsersRolesViewModel();
-                rvS = GetSessionUser();
-                return View("AddRole", rvS);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    UsersRolesViewModel rvS = new UsersRolesViewModel();
+            //    rvS = GetSessionUser();
+            //    return View("AddRole", rvS);
+            //}
             UsersRolesViewModel ur = new UsersRolesViewModel();
             try
             {

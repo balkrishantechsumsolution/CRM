@@ -1,9 +1,9 @@
-﻿using BugTrackingSys.Models;
+﻿using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BugTrackingSys.Areas.Admin.Models
+namespace LeedManagement.Areas.Admin.Models
 {
     public class UsersRolesViewModel
     {

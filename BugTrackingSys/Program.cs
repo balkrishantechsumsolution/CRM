@@ -4,7 +4,7 @@ using System.Globalization;
 using FluentValidation.TestHelper;
 using FluentValidation;
 using System;
-using BugTrackingSys.Areas.Developer.Models;
+using LeedManagement.Areas.Developer.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.Net;
 

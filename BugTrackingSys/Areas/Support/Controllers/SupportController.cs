@@ -2,10 +2,10 @@
 using SqlHelper;
 using System.Data.SqlClient;
 using System.Data;
-using BugTrackingSys.Models;
+using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Principal;
-using BugTrackingSys.Areas.Support.Models;
+using LeedManagement.Areas.Support.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using System.Text;
@@ -14,17 +14,17 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 
-namespace BugTrackingSys.Areas.Support.Controllers
+namespace LeedManagement.Areas.Support.Controllers
 {
     [Area("Support")]
-    public class SupportController : Controller
+    public class SalesController : Controller
     {
         private readonly IConfiguration configuration;
 
         public string _configuration = "";
         data sqlhelper = new data();
 
-        public SupportController(IConfiguration configuration)
+        public SalesController(IConfiguration configuration)
         {
 
             _configuration = configuration.GetConnectionString("TrackBugsContext");

@@ -1,10 +1,10 @@
-﻿using BugTrackingSys.Models;
+﻿using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.Mail;
 using System.Net;
 
-namespace BugTrackingSys.Controllers
+namespace LeedManagement.Controllers
 {
     public class HomeController : Controller
     {

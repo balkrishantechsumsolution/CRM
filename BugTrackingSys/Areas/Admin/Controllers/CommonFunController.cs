@@ -1,12 +1,12 @@
-﻿using BugTrackingSys.Models;
+﻿using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using SqlHelper;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using BugTrackingSys.Areas.Admin.Models;
+using LeedManagement.Areas.Admin.Models;
 
-namespace BugTrackingSys.Areas.Admin.Controllers
+namespace LeedManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CommonFunController : Controller

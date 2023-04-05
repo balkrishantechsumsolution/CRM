@@ -1,4 +1,4 @@
-﻿using BugTrackingSys.Models;
+﻿using LeedManagement.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Principal;
 
-namespace BugTrackingSys.Controllers
+namespace LeedManagement.Controllers
 {
     [Route("LoginController")]
     public class LoginController : Controller
@@ -64,6 +64,18 @@ namespace BugTrackingSys.Controllers
                     else if (UserType == "3")
                     {
                         return RedirectToAction(actionName: "Index", controllerName: "Support", new { area = "Support" });
+                    }
+                    else if (UserType == "5")
+                    {
+                        return RedirectToAction(actionName: "Index", controllerName: "Customer", new { area = "Customer" });
+                    }
+                    else if (UserType == "6")
+                    {
+                        return RedirectToAction(actionName: "Index", controllerName: "Sales", new { area = "Sales" });
+                    }
+                    else if (UserType == "9")
+                    {
+                        return RedirectToAction(actionName: "Index", controllerName: "ServiceEngineer", new { area = "ServiceEngineer" });
                     }
 
                 }

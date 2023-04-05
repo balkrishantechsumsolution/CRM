@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace BugTrackingSys.Areas.Support.Models
+namespace LeedManagement.Areas.Support.Models
 {
     public class Tasks
     {

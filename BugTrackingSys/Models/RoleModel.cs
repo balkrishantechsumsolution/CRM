@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BugTrackingSys.Models
+namespace LeedManagement.Models
 {
     //Ayush
     interface Role

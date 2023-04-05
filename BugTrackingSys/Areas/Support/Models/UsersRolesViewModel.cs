@@ -1,4 +1,4 @@
-﻿using BugTrackingSys.Models;
+﻿using LeedManagement.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +10,7 @@ using FluentValidation.TestHelper;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 
-namespace BugTrackingSys.Areas.Support.Models
+namespace LeedManagement.Areas.Support.Models
 {
     public class UsersRolesViewModel
     {

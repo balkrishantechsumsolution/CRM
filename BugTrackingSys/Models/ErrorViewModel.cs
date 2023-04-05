@@ -1,4 +1,4 @@
-namespace BugTrackingSys.Models
+namespace LeedManagement.Models
 {
     public class ErrorViewModel
     {

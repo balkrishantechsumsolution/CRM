@@ -2,10 +2,10 @@
 using SqlHelper;
 using System.Data.SqlClient;
 using System.Data;
-using BugTrackingSys.Models;
+using LeedManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Principal;
-using BugTrackingSys.Areas.Developer.Models;
+using LeedManagement.Areas.Developer.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using System.Text;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting.Internal;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace BugTrackingSys.Areas.Developer.Controllers
+namespace LeedManagement.Areas.Developer.Controllers
 {
     [Area("Developer")]
     public class DeveloperController : Controller

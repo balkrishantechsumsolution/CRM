@@ -1,0 +1,294 @@
+﻿@model LeedManagement.Areas.Sales.Models.UsersRolesViewModel;
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Add Task Page";
+    Layout = "~/Areas/Sales/Views/Shared/_Layout.cshtml";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<style>
+    .trRemark {
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        height: 10px !important; 
+        background-color: #FFFFFF;
+    }
+    .sFont {
+        color: #0d6efd;
+        font-weight: bold;
+    }
+
+    .split {
+        height: 100% !important;
+        overflow: unset !important;
+    }
+
+    .task_area{
+        padding: 50px 0px;
+        margin-left: 125px;
+        width: 100%;
+    }
+
+    }
+</style>
+
+
+<link href="https://unpkg.com/tailwindcss@1.0/dist/tailwind.min.css" rel="stylesheet" />
+<div class="  logo task_area ">
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-orange-300 rounded-lg">
+        <h1 class="display-4  sFont text-center">Add Task</h1>
+    </div>
+    <br />
+    <br />
+
+    <div class="mx-2 grid grid-cols-3 gap-2  bg-orange-300 rounded-lg" style="width: 100%;  height: 420px;  overflow: scroll;">
+        <form class="form-horizontal" enctype="multipart/form-data" method="post">
+            <section class="main-content">
+                <div class="rows" style="min-height: 300px; margin: 0 auto; width: 50%">
+                    <div class="col-lg-12">
+
+                        <div class="">
+                            <div class="resp-tabs-container ver_1">
+                                <div style="margin-top: 10px;">
+                                    <div>
+                                        <div class="rows">
+                                            <div id="divElement">
+                                                <div class="box-body box-body-open">
+
+                                                  
+                                                        @if (Model.taskRemarkList != null)
+                                                        {
+                                                        <br>
+
+                                                        <br>
+                                                        <br>
+
+                                                        <br>
+                                                        <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
+                                                           width="100%">
+                                                            @if (Model.taskRemarkList.Count() > 0)
+                                                            {
+                                                                foreach (var taskRemark in Model.taskRemarkList)
+                                                                {
+
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">ID</th>
+                                                                        <td class="sFont">@taskRemark.id</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">RemarksBy</th>
+                                                                        <td class="sFont">@Html.Raw(@taskRemark.RemarksBy)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">Remarks</th>
+                                                                        <td class="sFont">@Html.Raw(@taskRemark.Remarks)</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">RemarksOn</th>
+                                                                        <td class="sFont">@taskRemark.RemarksOn</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">CurrentStatus</th>
+                                                                        <td class="sFont">@taskRemark.CurrentStatus</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="th-sm" style=" color: white;">EndDate</th>
+                                                                        <td class="sFont">@taskRemark.EndDate</td>
+                                                                    </tr>
+
+                                                                   <tr class="trRemark">    <td colspan="2"></td> </tr>
+
+
+                                                                }
+                                                            }
+                                                        </table>
+                                                        <br>
+
+                                                        <br>
+                                                        <br>
+
+                                                        <br>
+                                                        }
+
+                                                  
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Name
+                                                        </label>
+                                                        <input type="text" asp-for="@Model.tasks.TaskName" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.TaskName" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Project Name
+                                                        </label>
+                                                        <select name="project.Id" asp-for="@Model.project.id" class="form-control" asp-items="@Model.ProjectList"></select>
+                                                        <span asp-validation-for="@Model.project.id" class="text-danger"></span>
+                                                    </div>
+                                                      <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Start Date
+                                                        </label>
+                                                        <input type="text" asp-for="@Model.tasks.Startdate" id="txtStartDate" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.Startdate" class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Completion Date
+                                                        </label>
+                                                        <input type="text" asp-for="@Model.tasks.Enddate" id="txtEndDate" class="form-control">
+                                                        <span asp-validation-for="@Model.tasks.Enddate" class="text-danger"></span>
+                                                    </div>
+
+                                                  
+                                                    <div class="form-outline" style="margin:0;width: 700px;">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Description
+                                                        </label>
+                                                        <div>
+                                                            <textarea class="form-control" asp-for="@Model.tasks.TaskDescrpition" id="project_Description"></textarea>
+                                                            <span  class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task assignment Name
+                                                        </label>
+                                                        <select name="tasks.TaskAssignee" asp-for="@Model.tasks.TaskAssignee" class="form-control" asp-items="@Model.AssigneeMainList"></select>
+                                                        <span asp-validation-for="@Model.tasks.TaskAssignee" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Priority
+                                                        </label>
+                                                        <select name="tasks.PrioritySet" asp-for="@Model.tasks.PrioritySet" class="form-control" asp-items="@Model.PriorityList" class="form-control"></select>
+                                                        <span asp-validation-for="@Model.tasks.PrioritySet" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Task Status
+                                                        </label>
+                                                        <select name="tasks.TaskStatus" asp-for="@Model.tasks.TaskStatus" class="form-control" asp-items="@Model.TaskList" class="form-control"></select>
+                                                        <span asp-validation-for="@Model.tasks.TaskStatus" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="display-7  sFont text-center control-label">
+                                                            Select Attachment:
+                                                        </label>
+                                                        <input asp-for="@Model.files" class="btn btn-primary" type="file" multiple>
+                                                    </div>
+                                                    
+                                                    <br />
+                                                    <input type="submit" class="btn btn-primary" value="Submit" asp-controller="Sales" asp-action="TaskIndex">
+                                                    <br />
+                                                    <br />
+                                                    <hr />
+
+
+
+
+
+                                                    @if (Model.fileAttach != null)
+                                                    {
+                                                        <table class="table text-center table table-striped table-bordered table-sm" cellspacing="0"
+                                                           width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="th-sm" style=" color: white;">File ID</th>
+                                                                    <th class="th-sm" style=" color: white;">File Name</th>
+                                                                    <th class="th-sm" style=" color: white;">Download</th>
+                                                                </tr>
+                                                            </thead>
+                                                            @if (Model.fileAttach.Count() > 0)
+                                                            {
+
+                                                                foreach (var file in Model.fileAttach)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="sFont">@file.FileID</td>
+                                                                        <td class="sFont">@file.FileName</td>
+                                                                        <td><a method="post" asp-controller="Sales" asp-action="DownloadFile" asp-route-fileid=@file.FileID style=" color: white;">Download File</a></td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        </table>
+                                                    }
+                                                 
+                                                    <br />
+                                                    <br />
+
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label sFont text-center">
+                                                               @Html.Raw(ViewBag.Message)
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <input asp-for="@Model.tasks.TaskId" type="hidden" value="@Model.tasks.TaskId" />
+          
+          
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        tinymce.init({ selector: "#project_Description" });
+    </script>
+    <script src="~/jquery-ui-1.13.2/jquery-ui.js"></script>
+    <link href="~/jquery-ui-1.13.2/jquery-ui.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.13.2/jquery-ui.theme.min.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $('#txtStartDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '-10:+10',
+                onSelect: function (date) {
+
+                    //GetValidateImmunizationDate();
+                }
+            });
+            //$('#txtStartDate').datepicker('setDate', 'today');
+
+            $('#txtEndDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '-10:+10',
+                onSelect: function (date) {
+
+                    //GetValidateImmunizationDate();
+                }
+                
+            });
+
+            //$('#txtEndDate').datepicker('setDate', 'today');
+        });
+    </script>
+}
+
+
+   
